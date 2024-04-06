@@ -1,8 +1,7 @@
-
 import { Metadata } from "next";
-import { CalendarTemplate } from "@/app/components/calendar/CalendarTemplate";
+import { CalendarTemplate } from "@/components/calendar/CalendarTemplate";
 
-export const metadata : Metadata = {
+export const metadata: Metadata = {
   title: "Calendar",
 };
 
