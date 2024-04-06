@@ -18,16 +18,22 @@ import { HamburgerIcon } from "@chakra-ui/icons";
 export const Header = () => {
   const breakpoint = useBreakpointValue(
     { base: "base", md: false },
-    { ssr: false }
+    { ssr: true }
   );
+
+  const menuItems = [
+    { label: "Home", href: "/" },
+    { label: "Calendar", href: "/calendar" },
+    { label: "Login", href: "/login" },
+  ];
+
   return (
-    <Flex justifyContent="space-between" p={4}>
+    <Flex justifyContent="space-between" p={4} bg="cyan.100">
       <Box>
         <Link
           href="/"
           textDecoration="none"
           _hover={{ textDecoration: "none" }}
-          color="teal.500"
           fontSize="2xl"
         >
           Calendar
@@ -40,20 +46,23 @@ export const Header = () => {
             as={IconButton}
             aria-label="Options"
             icon={<HamburgerIcon />}
+            bg="transparent"
           />
           <MenuList>
-            <MenuItem as={Link} href="/">
-              Home
-            </MenuItem>
-            <MenuItem as={Link} href="/calendar">
-              Calendar
-            </MenuItem>
+            {menuItems.map((item) => (
+              <MenuItem key={item.label} as={Link} href={item.href}>
+                {item.label}
+              </MenuItem>
+            ))}
           </MenuList>
         </Menu>
       ) : (
         <HStack gap={4}>
-          <Link href="/">Home</Link>
-          <Link href="/calendar">Calendar</Link>
+          {menuItems.map((item) => (
+            <Link key={item.label} href={item.href}>
+              {item.label}
+            </Link>
+          ))}
         </HStack>
       )}
     </Flex>
