@@ -1,13 +1,11 @@
 import { Container, Flex, Heading } from "@chakra-ui/react";
-import { Box, Button } from "@yamada-ui/react";
+import { HomeTemplate } from "./components/home/HomeTemplate";
+import { Metadata } from "next";
 
+export const metadata: Metadata = {
+  title: "Home",
+};
 
-export default function Home() {
-  return (
-    <Container>
-      <Flex justifyContent="center" alignItems="center" height="100vh">
-        <Heading>Calendar App</Heading>
-      </Flex>
-    </Container>
-  );
+export default function HomePage() {
+  return <HomeTemplate />;
 }

@@ -1,13 +1,11 @@
-'use client';
 
-import FullCalendar from "@fullcalendar/react";
-import { Box, Button } from "@yamada-ui/react";
-import dayGridPlugin from '@fullcalendar/daygrid' // a plugin!
+import { Metadata } from "next";
+import { CalendarTemplate } from "@/app/components/calendar/CalendarTemplate";
 
-export default function Calendar() {
-  return (
-    <Box p={4}>
-      <FullCalendar plugins={[dayGridPlugin]} initialView="dayGridMonth" />
-    </Box>
-  );
+export const metadata : Metadata = {
+  title: "Calendar",
+};
+
+export default function CalendarPage() {
+  return <CalendarTemplate />;
 }
