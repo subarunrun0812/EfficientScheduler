@@ -2,6 +2,7 @@ import { SimpleGrid, Box, Text, Divider } from "@chakra-ui/react";
 import { Schedule } from "./Schedule";
 import { Center } from "@yamada-ui/react";
 
+
 interface ScheduleListProps {
   width?: string | number;
   schedules: Schedule[];
