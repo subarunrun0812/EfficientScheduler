@@ -75,11 +75,23 @@ export const ScheduleDetail = ({ schedule, candidateSchedules }: ScheduleDetailP
                     size="lg"            // ボタンのサイズ
                     w="50%"             // 幅をいっぱいに
                     onClick={() => {
-                        alert("done");
+                        alert("予定が確定されました");
                     }}
                     isDisabled={selectedValues.length !== 1}
                 >
                     決定
+                </Button>
+                <Button
+                    mt={5}
+                    colorScheme="red"   // 配色
+                    variant="outline"    // ボタンのスタイル。枠線のみ
+                    size="lg"            // ボタンのサイズ
+                    w="50%"             // 幅をいっぱいに
+                    onClick={() => {
+                        confirm("この仮予定を削除しますか？");
+                    }}
+                >
+                    削除
                 </Button>
 
             </Flex>
