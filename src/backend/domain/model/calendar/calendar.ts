@@ -1,6 +1,6 @@
 import duration from 'dayjs/plugin/duration'
 import { Schedule } from '../schedule/schedule'
-import { TimeSlot } from '../time_slot/timeSlot'
+import { TimeSlot } from '../schedule/timeSlot'
 import { AvailableTime } from './availableTime'
 
 export class Calendar {

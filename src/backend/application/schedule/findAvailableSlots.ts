@@ -1,7 +1,7 @@
 import { AvailableTime } from '@/backend/domain/model/calendar/availableTime'
 import { ICalendarRepository } from '@/backend/domain/model/calendar/calendarRepository'
 import { IScheduleRepository } from '@/backend/domain/model/schedule/scheduleRepository'
-import { TimeSlot } from '@/backend/domain/model/time_slot/timeSlot'
+import { TimeSlot } from '@/backend/domain/model/schedule/timeSlot'
 import duration from 'dayjs/plugin/duration'
 
 export type RegisterScheduleInput = {
