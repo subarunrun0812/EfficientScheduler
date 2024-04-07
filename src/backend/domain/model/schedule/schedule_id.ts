@@ -1,1 +1,1 @@
-export type ScheduleId = string;
+export type ScheduleId = string

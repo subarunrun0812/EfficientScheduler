@@ -1,1 +1,1 @@
-export type Place = string;
+export type Place = string

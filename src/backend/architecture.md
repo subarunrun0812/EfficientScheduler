@@ -1,4 +1,5 @@
 ### ディレクトリ構成
+
 ```
 .
 ├── application # domain/service を呼び出して, use case を実現する
@@ -13,9 +14,11 @@
 ```
 
 ### 依存関係
+
 - Domain は他のモジュールに依存しません (外に向かう矢印がない). すなわち, 最も安定なモジュールです.
 - Application は Domain に依存します. Infrastructure には依存しません
 - Infrastructure は Application, Domain に依存します. すなわち, 最も不安定なモジュールです.
+
 ```mermaid
 classDiagram
     namespace Application {
@@ -67,4 +70,5 @@ classDiagram
 ```
 
 ### 参考
+
 - [ADOP (Application Domain Others Pattern)](https://nrslib.com/adop/)
