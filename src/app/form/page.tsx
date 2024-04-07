@@ -3,7 +3,7 @@ import { Metadata } from "next";
 
 
 export const metadata : Metadata = {
-	title: "Form",
+	title: "予定作成フォーム",
 };
 
 export default function FormPage() {
