@@ -1,7 +1,6 @@
-import { SimpleGrid } from "@chakra-ui/react";
-import { Box } from "@chakra-ui/react";
+import { SimpleGrid, Box, Text, Divider } from "@chakra-ui/react";
 import { Schedule } from "./Schedule";
-import { Text } from "@chakra-ui/react";
+import { Center } from "@yamada-ui/react";
 
 interface ScheduleListProps {
   width?: string | number;
@@ -36,18 +35,24 @@ export const ScheduleList = ({ width, schedules }: ScheduleListProps) => {
   };
 
   return (
-    <SimpleGrid
-      columns={1}
-      spacing={2}
-      overflow="auto"
-      width={width}
-      maxH="600"
+    <Box
       border="2px solid #086F83"
-      borderRadius="30px"
       padding="10px"
+      width={width}
+      borderRadius="30px"
+      borderWidth="3px" // Increase the border width to make it thicker
     >
-      {sortedSchedules.map(renderScheduleItem)}
-    </SimpleGrid>
-
+      <Text fontSize="3xl" textAlign="center">調整中の予定一覧</Text>
+      <Divider border="1.5px solid #086F83" margin="10px 0" />
+      <SimpleGrid
+        columns={1}
+        spacing={2}
+        overflow="auto"
+        maxH="600"
+        padding="10px"
+      >
+        {sortedSchedules.map(renderScheduleItem)}
+      </SimpleGrid>
+    </Box >
   );
 };
