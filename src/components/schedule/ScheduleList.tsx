@@ -16,26 +16,28 @@ export const ScheduleList = ({ width, schedules }: ScheduleListProps) => {
 
   const sortedSchedules = sortSchedulesByDate(schedules);
 
-  const boxHeight = "100px";
+
+  const renderScheduleItem = (schedule: Schedule) => {
+    return (
+      <Box
+        key={schedule.id}
+        bg="gray.100"
+        height={"100px"}
+        textAlign="center"
+        cursor="pointer"
+        _hover={{ bg: "gray.200" }}
+        //TODO: リンク先のページに遷移する
+        onClick={() => alert("遷移先のページに遷移する")}
+      >
+        <Text fontSize="2xl">{schedule.description}</Text>
+        <Text>仮候補日程を作成した日 <br />{schedule.date}</Text>
+      </Box>
+    );
+  };
 
   return (
     <SimpleGrid columns={1} spacing={2} overflow="auto" width={width} maxH="600">
-      {sortedSchedules.map((schedule) => (
-        <Box
-          key={schedule.id}
-          bg="gray.100"
-          height={boxHeight}
-          textAlign="center"
-          cursor="pointer"
-          _hover={{ bg: "gray.200" }}
-          //TODO: リンク先のページに遷移する
-          onClick={() => alert("遷移先のページに遷移する")}
-        >
-          <Text fontSize="2xl">{schedule.description}</Text>
-          <Text>仮候補日程を作成した日 <br />{schedule.date}</Text>
-        </Box>
-      ))
-      }
-    </SimpleGrid >
+      {sortedSchedules.map(renderScheduleItem)}
+    </SimpleGrid>
   );
 };
