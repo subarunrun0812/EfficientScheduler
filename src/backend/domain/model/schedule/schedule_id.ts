@@ -1,0 +1,1 @@
+export type ScheduleId = string;
