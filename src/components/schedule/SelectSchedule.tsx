@@ -25,6 +25,7 @@ export const SelectSchedule = ({
       borderRadius={8}
       borderColor='gray.300'
       width='100%'
+      _hover={{ bg: 'gray.100'}}
     >
       <Checkbox
         size='lg'

@@ -27,6 +27,7 @@ export const ScheduleList = ({ width, schedules }: ScheduleListProps) => {
         //TODO: リンク先のページに遷移する
         p={4}
         onClick={() => alert('遷移先のページに遷移する')}
+        borderRadius='10px'
       >
         <Text fontSize='2xl'>{schedule.description}</Text>
         <Text>
@@ -39,7 +40,9 @@ export const ScheduleList = ({ width, schedules }: ScheduleListProps) => {
 
   return (
     <Box
-      border='2px solid #086F83'
+      border='2px'
+      borderColor='cyan.700'
+      borderStyle='solid'
       padding='10px'
       width={width}
       borderRadius='30px'
@@ -48,7 +51,7 @@ export const ScheduleList = ({ width, schedules }: ScheduleListProps) => {
       <Text fontSize='3xl' textAlign='center'>
         調整中の予定一覧
       </Text>
-      <Divider border='1.5px solid #086F83' margin='10px 0' />
+      <Divider border='1.5px solid cyan.700' margin='10px 0' />
       <SimpleGrid
         columns={1}
         spacing={2}
