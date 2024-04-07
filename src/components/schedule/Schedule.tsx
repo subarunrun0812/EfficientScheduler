@@ -3,7 +3,7 @@ import { Box, Heading, Text } from "@chakra-ui/react";
 export interface Schedule {
   id: number;
   title: string;
-  date: string;
+  date: number;
   description: string;
 }
 

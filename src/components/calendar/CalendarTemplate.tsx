@@ -16,20 +16,62 @@ export const CalendarTemplate = () => {
     {
       id: 1,
       title: "Meeting",
-      date: "2023-09-01",
+      date: 20230931,
       description: "Meeting with the team",
     },
     {
       id: 2,
       title: "Interview",
-      date: "2023-09-02",
+      date: 20230930,
       description: "Interview with the candidate",
     },
     {
       id: 3,
       title: "Lunch",
-      date: "2023-09-03",
+      date: 20230903,
       description: "Lunch with the team",
+    },
+    {
+      id: 4,
+      title: "Presentation",
+      date: 20230904,
+      description: "Presenting to clients",
+    },
+    {
+      id: 5,
+      title: "Training",
+      date: 20230905,
+      description: "Training session for new employees",
+    },
+    {
+      id: 6,
+      title: "Conference",
+      date: 20230906,
+      description: "Attending a conference",
+    },
+    {
+      id: 7,
+      title: "Project Deadline",
+      date: 20230907,
+      description: "Finalizing project deliverables",
+    },
+    {
+      id: 8,
+      title: "Team Building",
+      date: 20230908,
+      description: "Team building activity",
+    },
+    {
+      id: 9,
+      title: "Client Meeting",
+      date: 20230909,
+      description: "Meeting with a client",
+    },
+    {
+      id: 10,
+      title: "Workshop",
+      date: 20230910,
+      description: "Attending a workshop",
     },
   ];
   return breakpoint ? (
