@@ -1,6 +1,5 @@
 import { SimpleGrid, Box, Text, Divider } from "@chakra-ui/react";
 import { Schedule, ScheduleListProps } from "./Structure";
-import { Center } from "@yamada-ui/react";
 
 
 export const ScheduleList = ({ width, schedules }: ScheduleListProps) => {
