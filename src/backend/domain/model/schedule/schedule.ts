@@ -1,16 +1,27 @@
 import duration from 'dayjs/plugin/duration'
 import { ScheduleId } from './scheduleId'
 import { Place } from './place'
-import { AvailableTime } from '@/backend/domain/model/schedule/availableTime'
+import { AvailableTime } from './availableTime'
+import { TimeSlot } from '@/backend/domain/model/time_slot/timeSlot'
+import { ScheduleStatus } from '@/backend/domain/model/schedule/scheduleStatus'
 
 export class Schedule {
   constructor(
-    private readonly id: ScheduleId,
-    private readonly title: string,
-    private readonly availableTime: AvailableTime,
-    private readonly place: Place,
-    private readonly timeBuffer: duration.Duration,
+    readonly id: ScheduleId,
+    readonly title: string,
+    readonly duration: duration.Duration,
+    readonly place: Place,
+    readonly timeBuffer: duration.Duration,
+    private status: ScheduleStatus,
   ) {}
 
-  // Slot 候補を作成
+  // ステータスを取得
+  getStatus(): ScheduleStatus {
+    return this.status
+  }
+
+  // 予定の候補を作成
+  createSlots(availableTime: AvailableTime, calendar: any): TimeSlot[] {
+    return []
+  }
 }
