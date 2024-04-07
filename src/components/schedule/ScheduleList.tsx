@@ -9,12 +9,10 @@ interface ScheduleListProps {
 }
 
 export const ScheduleList = ({ width, schedules }: ScheduleListProps) => {
-  // 日付降順にソートする関数
+  // 仮候補日程を作成した日付を降順にソートする関数
   const sortSchedulesByDate = (schedules: Schedule[]) => {
     return schedules.slice().sort((a, b) => a.date - b.date);
   }
-
-  // ソートしたschedulesを使う
 
   const sortedSchedules = sortSchedulesByDate(schedules);
 
@@ -22,9 +20,9 @@ export const ScheduleList = ({ width, schedules }: ScheduleListProps) => {
   return (
     <SimpleGrid columns={1} spacing={2} overflow="auto" width={width} maxH="600">
       {sortedSchedules.map(schedule => (
-        <Box key={schedule.id} bg="red" height={boxHeight}>
-          <Text>{schedule.date}</Text>
-          <Text>{schedule.description}</Text>
+        <Box key={schedule.id} bg="gray.100" height={boxHeight} textAlign="center">
+          <Text fontSize="2xl">{schedule.description}</Text>
+          <Text>仮候補日程を作成した日</Text>
         </Box>
       ))}
     </SimpleGrid>
