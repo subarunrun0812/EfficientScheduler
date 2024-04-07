@@ -21,11 +21,11 @@ export const ScheduleList = ({ width, schedules }: ScheduleListProps) => {
     return (
       <Box
         key={schedule.id}
-        bg="gray.100"
+        bg="#EDFDFD"
         height={"100px"}
         textAlign="center"
         cursor="pointer"
-        _hover={{ bg: "gray.200" }}
+        _hover={{ bg: "#C4F1F9" }}
         //TODO: リンク先のページに遷移する
         onClick={() => alert("遷移先のページに遷移する")}
       >
@@ -36,7 +36,14 @@ export const ScheduleList = ({ width, schedules }: ScheduleListProps) => {
   };
 
   return (
-    <SimpleGrid columns={1} spacing={2} overflow="auto" width={width} maxH="600">
+    <SimpleGrid
+      columns={1}
+      spacing={2}
+      overflow="auto"
+      width={width}
+      maxH="600"
+      border="1px solid #086F83"
+    >
       {sortedSchedules.map(renderScheduleItem)}
     </SimpleGrid>
   );
