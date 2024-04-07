@@ -75,6 +75,7 @@ export const CalendarTemplate = () => {
     },
   ];
   return breakpoint ? (
+    // mobile view
     <VStack gap={4}>
       <ScheduleList width="100%" schedules={scheduleList} />
       <Box width="100%" padding={10}>
@@ -82,8 +83,8 @@ export const CalendarTemplate = () => {
       </Box>
     </VStack>
   ) : (
-    <Box padding={10}>
-      <HStack>
+    <Box padding={5}>
+      <HStack gap={5}>
         <ScheduleList width="30%" schedules={scheduleList} />
         <Box width="70%">
           <FullCalendar plugins={[dayGridPlugin]} initialView="dayGridMonth" />

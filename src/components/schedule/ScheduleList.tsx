@@ -42,9 +42,12 @@ export const ScheduleList = ({ width, schedules }: ScheduleListProps) => {
       overflow="auto"
       width={width}
       maxH="600"
-      border="1px solid #086F83"
+      border="2px solid #086F83"
+      borderRadius="30px"
+      padding="10px"
     >
       {sortedSchedules.map(renderScheduleItem)}
     </SimpleGrid>
+
   );
 };
