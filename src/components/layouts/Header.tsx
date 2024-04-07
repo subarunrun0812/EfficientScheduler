@@ -22,9 +22,10 @@ export const Header = () => {
   );
 
   const menuItems = [
-    { label: "Home", href: "/" },
-    { label: "Calendar", href: "/calendar" },
-    { label: "Login", href: "/login" },
+    { label: "ホーム", href: "/" },
+    { label: "カレンダー", href: "/calendar" },
+    { label: "予定作成", href: "/form" },
+    { label: "ログイン", href: "/login" },
   ];
 
   return (
