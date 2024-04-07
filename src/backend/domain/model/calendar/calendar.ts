@@ -14,4 +14,8 @@ export class Calendar {
     ): TimeSlot[] {
         return []
     }
+
+    async addSchedule(schedule: Schedule): Promise<void> {
+        return 
+    }
 }

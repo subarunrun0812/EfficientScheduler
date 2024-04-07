@@ -24,4 +24,8 @@ export class Schedule {
   getId(): string {
     return this.scheduleId.getId()
   }
+
+  // slotId で指定されたスロットに確定
+  // それ以外の予約済みスロットを削除する
+  confirmSlot(slotId: string): void {}
 }
