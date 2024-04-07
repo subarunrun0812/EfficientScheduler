@@ -1,6 +1,7 @@
+"use client";
+
 import { SimpleGrid, Box, Text, Divider } from "@chakra-ui/react";
 import { Schedule, ScheduleListProps } from "./Structure";
-
 
 export const ScheduleList = ({ width, schedules }: ScheduleListProps) => {
   // 仮候補日程を作成した日付を降順にソートする関数
