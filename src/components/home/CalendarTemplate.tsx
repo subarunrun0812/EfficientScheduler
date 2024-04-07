@@ -3,10 +3,10 @@
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import { Box, HStack, VStack, useBreakpointValue } from '@chakra-ui/react'
-import { Schedule } from '../schedule/Schedule'
 import { ScheduleList } from '../schedule/ScheduleList'
+import { Schedule } from '../schedule/type'
 
-export const CalendarTemplate = () => {
+export const HomeTemplate = () => {
   const breakpoint = useBreakpointValue(
     { base: 'base', md: false },
     { ssr: true },
@@ -77,7 +77,7 @@ export const CalendarTemplate = () => {
   return breakpoint ? (
     // mobile view
     <VStack gap={4}>
-      <Box padding={5}>
+      <Box padding={5} width='100%'>
         <ScheduleList width='100%' schedules={scheduleList} />
       </Box>
       <Box width='100%' padding={10}>

@@ -76,9 +76,16 @@ export const FormTemplatePresenter = ({
   )
   const router = useRouter()
   const handleRouter = () => {
-    router.push(`/form/candidate?id=${1}`)
+    router.push(`/candidate`)
   }
 
+  const isDisabled =
+    title === '' ||
+    startTime === '' ||
+    endTime === '' ||
+    duration === '' ||
+    isTimeRangeError ||
+    parseInt(requiredTime) < 0
   return (
     <Box h='100vh' mt={10}>
       <Flex direction='column' align='center' justify='center' mt={10}>
@@ -171,8 +178,10 @@ export const FormTemplatePresenter = ({
             breakpoint={breakpoint}
           />
 
-          <Box>
-            <Button onClick={onOpen}>場所を追加</Button>
+          <Box w='100%'>
+            <Button onClick={onOpen} w='100%'>
+              場所情報を編集
+            </Button>
             <PlaceModal
               isOpen={isOpen}
               onClose={onClose}
@@ -186,19 +195,13 @@ export const FormTemplatePresenter = ({
               setRequiredTime={setRequiredTime}
             />
           </Box>
-          <Box w='100%' mt={10}>
+          <Box w='100%' mt={5}>
             <Button
               colorScheme='cyan'
               variant='outline'
               size='lg'
               w='100%'
-              isDisabled={
-                title === '' ||
-                startTime === '' ||
-                endTime === '' ||
-                duration === '' ||
-                isTimeRangeError
-              }
+              isDisabled={isDisabled}
               onClick={() => {
                 // TODO : submitした時の処理
                 alert(

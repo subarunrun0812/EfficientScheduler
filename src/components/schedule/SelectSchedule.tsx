@@ -33,6 +33,7 @@ export const SelectSchedule = ({
         onChange={handleCheckboxChange}
         width='100%'
         value={id}
+        id={id}
       >
         <VStack align='start' w='100%'>
           <Box>

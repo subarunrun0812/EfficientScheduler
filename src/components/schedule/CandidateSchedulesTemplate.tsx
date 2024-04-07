@@ -2,7 +2,14 @@
 
 import { ChangeEvent, useState } from 'react'
 import { SelectSchedule } from './SelectSchedule'
-import { Box, Button, Flex, Heading, VStack } from '@chakra-ui/react'
+import {
+  Box,
+  Button,
+  Flex,
+  Heading,
+  VStack,
+  useBreakpointValue,
+} from '@chakra-ui/react'
 import { useSearchParams } from 'next/navigation'
 
 export interface CandidateSchedule {
@@ -34,9 +41,14 @@ export const CandidateSchedulesTemplate = ({
     }
   }
 
+  const breakpoint = useBreakpointValue(
+    { base: 'base', md: false },
+    { ssr: true },
+  )
+
   // URLパラメータ取得
-  const searchParams = useSearchParams()
-  const test = searchParams.get('id')
+  // const searchParams = useSearchParams()
+  // const test = searchParams.get('id')
 
   return (
     <Flex justify='flex-start' direction='column' align='center' h='90vh'>
@@ -49,7 +61,7 @@ export const CandidateSchedulesTemplate = ({
         spacing={4}
         padding={4}
         align='start'
-        w='50%'
+        w={breakpoint ? '100%' : '50%'}
         h='60vh'
         overflow='auto'
       >
@@ -65,7 +77,7 @@ export const CandidateSchedulesTemplate = ({
           />
         ))}
       </VStack>
-      <Box w='40%' mt={10}>
+      <Box w={breakpoint ? '100%' : '50%'} mt={10} p={2} alignItems='center'>
         <Button
           colorScheme='cyan'
           variant='outline'
