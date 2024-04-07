@@ -1,12 +1,7 @@
 import { SimpleGrid, Box, Text, Divider } from "@chakra-ui/react";
-import { Schedule } from "./Schedule";
+import { Schedule, ScheduleListProps } from "./Structure";
 import { Center } from "@yamada-ui/react";
 
-
-interface ScheduleListProps {
-  width?: string | number;
-  schedules: Schedule[];
-}
 
 export const ScheduleList = ({ width, schedules }: ScheduleListProps) => {
   // 仮候補日程を作成した日付を降順にソートする関数
