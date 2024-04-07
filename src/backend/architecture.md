@@ -24,7 +24,7 @@ classDiagram
         }
         class IQueryService {
             <<interface>>
-            +complexQuery()
+            +complexQuery()*
         }
     }
     namespace Domain {
@@ -37,8 +37,8 @@ classDiagram
         }
         class IRepository {
             <<interface>>
-            +save()
-            +find()
+            +save()*
+            +find()*
         }
     }
     namespace Infrastructure {
