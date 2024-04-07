@@ -3,7 +3,7 @@
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import { Box, HStack, VStack, useBreakpointValue } from "@chakra-ui/react";
-import { Schedule } from "../schedule/Schdule";
+import { Schedule } from "../schedule/Schedule";
 import { ScheduleList } from "../schedule/ScheduleList";
 
 export const CalendarTemplate = () => {
