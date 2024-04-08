@@ -5,6 +5,7 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import { Box, HStack, VStack, useBreakpointValue } from '@chakra-ui/react'
 import { ScheduleList } from '../schedule/ScheduleList'
 import { Schedule } from '../schedule/type'
+import { CreateScheduleButton } from '../schedule/CreateScheduleButton'
 
 export const HomeTemplate = () => {
   const breakpoint = useBreakpointValue(
@@ -55,29 +56,12 @@ export const HomeTemplate = () => {
       date: 20230907,
       description: 'Finalizing project deliverables',
     },
-    {
-      id: 8,
-      title: 'Team Building',
-      date: 20230908,
-      description: 'Team building activity',
-    },
-    {
-      id: 9,
-      title: 'Client Meeting',
-      date: 20230909,
-      description: 'Meeting with a client',
-    },
-    {
-      id: 10,
-      title: 'Workshop',
-      date: 20230910,
-      description: 'Attending a workshop',
-    },
   ]
   return breakpoint ? (
     // mobile view
     <VStack gap={4}>
       <Box padding={5} width='100%'>
+        <CreateScheduleButton width='60%' />
         <ScheduleList width='100%' schedules={scheduleList} />
       </Box>
       <Box width='100%' padding={10}>
@@ -87,12 +71,10 @@ export const HomeTemplate = () => {
   ) : (
     <Box padding={5}>
       <HStack gap={5}>
-        {/* TODO: ScheduleListコンポーネントの配置場所をページの下側から10%上に移動させる */}
-        <Box
-          width="30%"
-        >
-          <ScheduleList schedules={scheduleList} />
-        </Box>
+        <VStack width='30%'>
+          <CreateScheduleButton width='60%' />
+          <ScheduleList width='100%' schedules={scheduleList} />
+        </VStack>
         <Box width='70%'>
           <FullCalendar plugins={[dayGridPlugin]} initialView='dayGridMonth' />
         </Box>
