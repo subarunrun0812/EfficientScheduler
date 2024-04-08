@@ -3,14 +3,16 @@
 import { Schedule } from "@/backend/domain/model/schedule/schedule"
 import { IScheduleRepository } from "@/backend/domain/model/schedule/scheduleRepository"
 
-// 期間の情報をもらう・置き場所を考える必要がある
-export type DataSpan = {
-    startDate: Date
-    endDate: Date
-}
+// 期間の情報をもらう
+// TODO: 置き場所を考える必要がある。必要性再検討
+// export type DataSpan = {
+//     startDate: Date
+//     endDate: Date
+// }
 
 export type GetAllScheduleUseCaseInput = {
     currentUserId: string
+    // TODO: dataSpan: DataSpanに置き換えた方がいい？
     startDate: Date
     endDate: Date
 }

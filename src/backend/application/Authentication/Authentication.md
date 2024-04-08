@@ -7,12 +7,12 @@ graph TD;
 
 A[サイトにアクセス] --> B[Cookieの有無を確認する]:::col
 B --> C[Cookieがあった場合]
-C --> E[割り当てられたUserIdが返されて、その後の処理で使えるようになる]
+C --> E[session_idを基に、UserIdが返される]
 B --> D[Cookieがなかった場合]
-D --> DA[認証すべきページがかえされる]:::col
+D --> DA[認証ページ-URLが返される]:::col
 DA --> DB[googleのログインページに飛ぶ]
 DB --> DC[認可されて、リダイレクトされる。]
-DC --> DD[ユーザーの登録やsession_idを割り当てる]:::col
+DC --> DD[ユーザーの登録・session_idの割り当てが行われる]:::col
 DD --> E:::col
 ```
 ---
