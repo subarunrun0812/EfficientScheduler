@@ -1,11 +1,17 @@
-import { Container, Flex, Heading } from "@chakra-ui/react";
-import { HomeTemplate } from "../components/home/HomeTemplate";
-import { Metadata } from "next";
+import { Container, Flex, HStack, Heading } from '@chakra-ui/react'
+import { TopTemplate } from '../components/top/TopTemplate'
+import { Metadata } from 'next'
+import { LoginTemplate } from '@/components/top/LoginTemplate'
 
 export const metadata: Metadata = {
-  title: "Home",
-};
+  title: 'Home',
+}
 
 export default function HomePage() {
-  return <HomeTemplate />;
+  return (
+    <HStack>
+      <LoginTemplate />;
+      <TopTemplate />;
+    </HStack>
+  )
 }

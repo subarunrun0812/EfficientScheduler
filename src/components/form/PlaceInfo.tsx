@@ -60,8 +60,15 @@ export const PlaceInfo = ({
           <FormLabel>移動時間</FormLabel>
           <Input
             value={requiredTime}
-            type='text'
-            onChange={(e) => setRequiredTime(e.target.value)}
+            type='number'
+            isInvalid={parseInt(requiredTime) < 0}
+            onChange={(e) => {
+              if (parseInt(e.target.value) < 0 || e.target.value === '') {
+                setRequiredTime('0')
+              } else {
+                setRequiredTime(e.target.value)
+              }
+            }}
           />
         </FormControl>
       ) : null}

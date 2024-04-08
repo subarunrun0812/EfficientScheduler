@@ -1,7 +1,7 @@
 import { Container, Flex, Heading } from "@chakra-ui/react";
 
 
-export const HomeTemplate = () => {
+export const TopTemplate = () => {
 	return (
 		<Container>
       <Flex justifyContent="center" alignItems="center" height="100vh">
