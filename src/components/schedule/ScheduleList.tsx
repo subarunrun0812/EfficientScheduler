@@ -24,8 +24,8 @@ export const ScheduleList = ({ width, schedules }: ScheduleListProps) => {
         textAlign='center'
         cursor='pointer'
         _hover={{ bg: 'cyan.100' }}
-        //TODO: リンク先のページに遷移する
         p={4}
+        //TODO: リンク先のページに遷移する
         onClick={() => alert('遷移先のページに遷移する')}
         borderRadius='10px'
       >
@@ -40,13 +40,13 @@ export const ScheduleList = ({ width, schedules }: ScheduleListProps) => {
 
   return (
     <Box
-      border='2px'
-      borderColor='cyan.700'
-      borderStyle='solid'
-      padding='10px'
+      border="2px"
+      borderColor="cyan.700"
+      borderStyle="solid"
+      padding="10px"
       width={width}
-      borderRadius='30px'
-      borderWidth='3px' // Increase the border width to make it thicker
+      borderRadius="30px"
+      borderWidth="3px"
     >
       <Text fontSize='3xl' textAlign='center'>
         調整中の予定一覧

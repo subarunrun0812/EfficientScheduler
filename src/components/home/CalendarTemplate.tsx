@@ -87,11 +87,16 @@ export const HomeTemplate = () => {
   ) : (
     <Box padding={5}>
       <HStack gap={5}>
-        <ScheduleList width='30%' schedules={scheduleList} />
+        {/* TODO: ScheduleListコンポーネントの配置場所をページの下側から10%上に移動させる */}
+        <Box
+          width="30%"
+        >
+          <ScheduleList schedules={scheduleList} />
+        </Box>
         <Box width='70%'>
           <FullCalendar plugins={[dayGridPlugin]} initialView='dayGridMonth' />
         </Box>
-      </HStack>
-    </Box>
+      </HStack >
+    </Box >
   )
 }
