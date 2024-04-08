@@ -1,5 +1,5 @@
 import { Box, Checkbox, Heading, VStack } from '@chakra-ui/react'
-import { ChangeEvent } from 'react'
+import { ChangeEvent, useState } from 'react'
 
 interface SelectScheduleProps {
   id: string
@@ -8,6 +8,7 @@ interface SelectScheduleProps {
   startTime: string
   endTime: string
   handleCheckboxChange: (event: ChangeEvent<HTMLInputElement>) => void
+  selectedRadioValue?: string
 }
 
 export const SelectSchedule = ({
@@ -17,7 +18,11 @@ export const SelectSchedule = ({
   startTime,
   endTime,
   handleCheckboxChange,
+  selectedRadioValue,
 }: SelectScheduleProps) => {
+  const [isCheck, setIsCheck] = useState(false)
+  const isChecked =
+    selectedRadioValue !== undefined ? selectedRadioValue === id : isCheck
   return (
     <Box
       padding={4}
@@ -25,16 +30,26 @@ export const SelectSchedule = ({
       borderRadius={8}
       borderColor='gray.300'
       width='100%'
-      _hover={{ bg: 'gray.100'}}
+      _hover={{ bg: 'gray.100' }}
+      bg={isChecked ? 'gray.100' : 'white'}
     >
       <Checkbox
         size='lg'
         variant='outline'
         borderColor='gray.300'
-        onChange={handleCheckboxChange}
+        onChange={(e) => {
+          handleCheckboxChange(e)
+          if (selectedRadioValue !== undefined) {
+            setIsCheck(selectedRadioValue === id)
+          } else {
+            setIsCheck(!isCheck)
+          }
+        }}
         width='100%'
         value={id}
         id={id}
+        isChecked={isChecked}
+        className='checkbox'
       >
         <VStack align='start' w='100%'>
           <Box>
