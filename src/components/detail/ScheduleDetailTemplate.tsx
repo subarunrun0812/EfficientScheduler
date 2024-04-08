@@ -43,15 +43,18 @@ export const ScheduleDetailTemplate = ({
 }: ScheduleDetailProps) => {
   // 選択した要素取得する一連の流れ
   const [selectedValues, setSelectedValues] = useState<string[]>([])
+  const [selectedRadioValue, setSelectedRadioValue] = useState<string>('')
 
   const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value
     const isChecked = event.target.checked
 
     if (isChecked) {
-      setSelectedValues([...selectedValues, value])
+      setSelectedRadioValue(value)
+      setSelectedValues([value])
     } else {
-      setSelectedValues(selectedValues.filter((item) => item !== value))
+      setSelectedRadioValue('')
+      setSelectedValues([])
     }
   }
 
@@ -87,6 +90,7 @@ export const ScheduleDetailTemplate = ({
               startTime={schedule.startTime}
               endTime={schedule.endTime}
               handleCheckboxChange={handleCheckboxChange}
+              selectedRadioValue={selectedRadioValue}
             />
           ))}
         </VStack>
@@ -99,7 +103,7 @@ export const ScheduleDetailTemplate = ({
             size='lg' // ボタンのサイズ
             w='100%' // 幅をいっぱいに
             onClick={() => {
-              alert('予定が確定されました')
+              alert(selectedValues)
             }}
             isDisabled={selectedValues.length !== 1}
           >

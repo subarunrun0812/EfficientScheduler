@@ -62,6 +62,7 @@ export const PlaceInfo = ({
             value={requiredTime}
             type='number'
             isInvalid={parseInt(requiredTime) < 0}
+            borderColor='gray.200'
             onChange={(e) => {
               if (parseInt(e.target.value) < 0 || e.target.value === '') {
                 setRequiredTime('0')
