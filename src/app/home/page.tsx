@@ -8,3 +8,5 @@ export const metadata: Metadata = {
 export default function CalendarPage() {
   return <HomeTemplate />
 }
+
+
