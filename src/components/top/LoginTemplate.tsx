@@ -9,7 +9,7 @@ import {
 
 export const LoginTemplate = () => {
   return (
-    <Center h="100vh">
+    <Center h="100vh" p={4} w="40%">
       <VStack>
         <Heading>Login</Heading>
         <HStack>
