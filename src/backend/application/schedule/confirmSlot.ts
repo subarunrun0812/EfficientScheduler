@@ -18,7 +18,7 @@ export class ConfirmSlotUseCase {
     ) {}
 
     async execute(input: ConfirmSlotUseCaseInput): Promise<ConfirmSlotUseCaseOutput> {
-        const schedule = await this.scheduleRepository.findById(input.scheduleId).catch(_ => null)
+        const schedule = await this.scheduleRepository.find(input.scheduleId).catch(_ => null)
         if (schedule === null) {
             throw new Error('Schedule not found')
         }
