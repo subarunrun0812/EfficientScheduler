@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { Location } from './location'
 import { TimeSlot } from '@/backend/domain/model/event/timeSlot'
 
-export type EventStatus = 'confirmed' | 'tentative' | 'cancelled'
+export type EventStatus = 'confirmed' | 'tentative'
 
 export class Event {
   readonly id: string = uuidv4()
@@ -26,11 +26,24 @@ export class Event {
     return this.status === 'confirmed'
   }
 
-  isCancelled(): boolean {
-    return this.status === 'cancelled'
-  }
-
   getTimeSlots(): TimeSlot[] {
     return this.timeSlots
+  }
+
+  findTimeSlot(timeSlotId: string): TimeSlot | undefined {
+    return this.timeSlots.find((ts) => ts.id === timeSlotId)
+  }
+
+  selectTimeSlot(timeSlotId: string): void {
+    if (this.isConfirmed()) {
+      throw new Error('confirmed event cannot change time slot')
+    }
+
+    const timeSlot = this.findTimeSlot(timeSlotId)
+    if (!timeSlot) {
+      throw new Error('time slot not found')
+    }
+
+    this.timeSlots = [timeSlot]
   }
 }

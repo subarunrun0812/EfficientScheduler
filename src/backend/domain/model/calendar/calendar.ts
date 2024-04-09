@@ -37,4 +37,8 @@ export class Calendar {
       return timeSlots.some((timeSlot) => timeSlot.isWithin(startDateTime, endDateTime))
     })
   }
+
+  getEvent(eventId: string): Event | undefined {
+    return this.events.find((event) => event.id === eventId)
+  }
 }

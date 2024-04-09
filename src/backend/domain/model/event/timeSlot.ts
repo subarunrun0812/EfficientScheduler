@@ -1,4 +1,5 @@
 import dayjs, { Dayjs } from 'dayjs'
+import { v4 as uuidv4 } from 'uuid'
 import duration, { Duration } from 'dayjs/plugin/duration'
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter'
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
@@ -8,6 +9,8 @@ dayjs.extend(isSameOrAfter)
 dayjs.extend(isSameOrBefore)
 
 export class TimeSlot {
+  readonly id: string = uuidv4()
+
   constructor(
     readonly startDateTime: Dayjs,
     readonly endDateTime: Dayjs,

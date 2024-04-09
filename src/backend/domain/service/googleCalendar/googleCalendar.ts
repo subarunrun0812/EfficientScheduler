@@ -7,4 +7,5 @@ export interface IGoogleCalendarService {
     startDate: Dayjs,
     endDate: Dayjs,
   ): Promise<Event[] | null>
+  createEvent(userId: string, event: Event): Promise<void>
 }
