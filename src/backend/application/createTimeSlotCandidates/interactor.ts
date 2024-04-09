@@ -14,7 +14,7 @@ export class CreateTimeSlotCandidatesInteractor
     private readonly googleCalendarService: IGoogleCalendarService,
   ) {}
 
-  async handle(
+  async execute(
     input: CreateTimeSlotCandidatesInput,
   ): Promise<CreateTimeSlotCandidatesOutput> {
     const { userId, startDateTime, endDateTime, duration, bufferDuration } =

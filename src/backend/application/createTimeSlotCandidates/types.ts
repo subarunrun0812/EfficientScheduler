@@ -13,7 +13,7 @@ export type CreateTimeSlotCandidatesInput = {
 export type CreateTimeSlotCandidatesOutput = TimeSlot[]
 
 export interface ICreateTimeSlotCandidatesUseCase {
-  handle(
+  execute(
     input: CreateTimeSlotCandidatesInput,
   ): Promise<CreateTimeSlotCandidatesOutput>
 }
