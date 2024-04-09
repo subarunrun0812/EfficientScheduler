@@ -1,5 +1,11 @@
 import dayjs, { Dayjs } from 'dayjs'
-import { Duration } from 'dayjs/plugin/duration'
+import duration, { Duration } from 'dayjs/plugin/duration'
+import isSameOrAfter from 'dayjs/plugin/isSameOrAfter'
+import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
+
+dayjs.extend(duration)
+dayjs.extend(isSameOrAfter)
+dayjs.extend(isSameOrBefore)
 
 export class TimeSlot {
   constructor(
@@ -18,7 +24,15 @@ export class TimeSlot {
   overlaps(other: TimeSlot): boolean {
     return (
       this.startDateTime.isBefore(other.endDateTime) &&
-      other.startDateTime.isBefore(this.endDateTime)
+      this.endDateTime.isAfter(other.startDateTime)
+    )
+  }
+
+  // 引数で渡された startDateTime, endDateTime の区間に含まれるか
+  isWithin(startDateTime: Dayjs, endDateTime: Dayjs): boolean {
+    return (
+      this.startDateTime.isSameOrAfter(startDateTime) &&
+      this.endDateTime.isSameOrBefore(endDateTime)
     )
   }
 
