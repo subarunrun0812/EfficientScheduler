@@ -2,10 +2,16 @@
 
 import { SimpleGrid, Box, Text, Divider } from '@chakra-ui/react'
 import { Schedule } from './type'
+import { useRouter } from 'next/navigation'
+
 
 interface ScheduleListProps {
   width?: string | number
   schedules: Schedule[]
+}
+
+interface ScheduleDetailsProps {
+  id?: string | number
 }
 
 export const ScheduleList = ({ width, schedules }: ScheduleListProps) => {
@@ -16,6 +22,11 @@ export const ScheduleList = ({ width, schedules }: ScheduleListProps) => {
 
   const sortedSchedules = sortSchedulesByDate(schedules)
 
+  // 予定フォームに遷移する関数
+  const router = useRouter();
+  const handleButtonClick = ({ id }: ScheduleDetailsProps) => {
+    router.push(`/${id}.detail`);
+  };
   const renderScheduleItem = (schedule: Schedule) => {
     return (
       <Box
@@ -25,8 +36,8 @@ export const ScheduleList = ({ width, schedules }: ScheduleListProps) => {
         cursor='pointer'
         _hover={{ bg: 'cyan.100' }}
         p={4}
-        //TODO: リンク先のページに遷移する
-        onClick={() => alert('予定詳細のページに遷移する')}
+        //リンク先のページに遷移する
+        onClick={() => handleButtonClick({ id: schedule.id })}
         borderRadius='10px'
       >
         <Text fontSize='2xl'>{schedule.description}</Text>
