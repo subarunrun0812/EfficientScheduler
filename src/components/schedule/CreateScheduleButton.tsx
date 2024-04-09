@@ -1,5 +1,6 @@
 import { Box, Button, Heading, useBreakpointValue } from "@chakra-ui/react"
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useRouter } from 'next/navigation'
+
 
 interface CreateScheduleButtonProps {
     width?: string | number
@@ -8,7 +9,11 @@ interface CreateScheduleButtonProps {
 
 
 export const CreateScheduleButton = ({ width, height }: CreateScheduleButtonProps) => {
-
+    const router = useRouter();
+    const handleButtonClick = () => {
+        // 予定フォームに遷移
+        router.push('/form');
+    };
     return (
         <Box
             sx={{
@@ -20,7 +25,6 @@ export const CreateScheduleButton = ({ width, height }: CreateScheduleButtonProp
             }}
         >
             <Heading>
-                <FontAwesomeIcon icon="calendar-days" size="lg" />
                 <Button
                     mt={10}
                     // cyan.300
@@ -31,10 +35,8 @@ export const CreateScheduleButton = ({ width, height }: CreateScheduleButtonProp
                     w='100%' // 幅をいっぱいに
                     color='white' // テキストの色を白に設定
                     height={height}
-                    onClick={() => {
-                        // 予定フォームに遷移する
-                        alert("予定フォームに遷移する")
-                    }}>
+                    onClick={handleButtonClick}
+                >
                     <Heading as='h2' size='xl'>
                         予定候補日の作成
                     </Heading>
