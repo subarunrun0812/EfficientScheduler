@@ -18,11 +18,16 @@ export class Calendar {
     this.events = this.events.filter((event) => event.id !== eventId)
   }
 
-  getEvents(): readonly Event[] {
-    return this.events
+  getAvailableTimeSlots(
+    startDateTime: Dayjs,
+    endDateTime: Dayjs,
+    duration: Duration,
+    bufferDuration: Duration,
+  ): TimeSlot[] {
+    return []
   }
 
-  getAvailableTimeSlots(startDateTime: Dayjs, endDateTime: Dayjs, duration: Duration, bufferDuration: Duration): TimeSlot[] {
-    return []
+  getTentativeEvents(): Event[] {
+    return this.events.filter((event) => event.getStatus() == 'tentative')
   }
 }
