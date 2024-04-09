@@ -1,5 +1,8 @@
 import { v4 as uuidv4 } from 'uuid'
 import { Event } from '@/backend/domain/model/event/event'
+import { Dayjs } from 'dayjs'
+import { Duration } from 'dayjs/plugin/duration'
+import { TimeSlot } from '@/backend/domain/model/event/timeSlot'
 
 export class Calendar {
   readonly id: string = uuidv4()
@@ -17,5 +20,9 @@ export class Calendar {
 
   getEvents(): readonly Event[] {
     return this.events
+  }
+
+  getAvailableTimeSlots(startDateTime: Dayjs, endDateTime: Dayjs, duration: Duration, bufferDuration: Duration): TimeSlot[] {
+    return []
   }
 }
