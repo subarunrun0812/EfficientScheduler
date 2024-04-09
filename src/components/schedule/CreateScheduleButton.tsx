@@ -16,13 +16,12 @@ export const CreateScheduleButton = ({ width, height }: CreateScheduleButtonProp
     };
     return (
         <Box
-            sx={{
-                width: width, // Boxの幅を指定
-                display: 'flex', // flexboxレイアウトを適用
-                justifyContent: 'center', // 水平方向に中央寄せ
-                alignItems: 'center', // 垂直方向に中央寄せ
-                margin: '10% 20%', // 左右に等しい余白を設定
-            }}
+            width={width}
+            display="flex" // flexboxレイアウトを適用
+            justifyContent="center" // 水平方向に中央寄せ
+            alignItems="center" // 垂直方向に中央寄せ
+            my="10%"
+            mx="20%"
         >
             <Heading>
                 <Button
