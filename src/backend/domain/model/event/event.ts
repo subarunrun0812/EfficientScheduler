@@ -18,8 +18,16 @@ export class Event {
     }
   }
 
-  getStatus(): EventStatus {
-    return this.status
+  isTentative(): boolean {
+    return this.status === 'tentative'
+  }
+
+  isConfirmed(): boolean {
+    return this.status === 'confirmed'
+  }
+
+  isCancelled(): boolean {
+    return this.status === 'cancelled'
   }
 
   getTimeSlots(): TimeSlot[] {

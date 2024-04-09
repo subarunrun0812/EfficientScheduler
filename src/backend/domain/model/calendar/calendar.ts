@@ -28,6 +28,6 @@ export class Calendar {
   }
 
   getTentativeEvents(): Event[] {
-    return this.events.filter((event) => event.getStatus() == 'tentative')
+    return this.events.filter((event) => event.isTentative())
   }
 }
