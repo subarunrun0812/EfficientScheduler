@@ -25,7 +25,7 @@ export const ScheduleList = ({ width, schedules }: ScheduleListProps) => {
   // 予定フォームに遷移する関数
   const router = useRouter();
   const handleButtonClick = ({ id }: ScheduleDetailsProps) => {
-    router.push(`/${id}.detail`);
+    router.push(`/detail?id=${id}`);
   };
   const renderScheduleItem = (schedule: Schedule) => {
     return (
