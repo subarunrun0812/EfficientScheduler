@@ -61,7 +61,7 @@ export const HomeTemplate = () => {
     // mobile view
     <VStack gap={4}>
       <Box padding={5} width='100%'>
-        <CreateScheduleButton width='60%' />
+        <CreateScheduleButton width='60%' height='70px' />
         <ScheduleList width='100%' schedules={scheduleList} />
       </Box>
       <Box width='100%' padding={10}>
@@ -72,7 +72,7 @@ export const HomeTemplate = () => {
     <Box padding={5}>
       <HStack gap={5}>
         <VStack width='30%'>
-          <CreateScheduleButton width='60%' />
+          <CreateScheduleButton width='60%' height='100px' />
           <ScheduleList width='100%' schedules={scheduleList} />
         </VStack>
         <Box width='70%'>
