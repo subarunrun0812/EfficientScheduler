@@ -26,7 +26,7 @@ export const ScheduleList = ({ width, schedules }: ScheduleListProps) => {
         _hover={{ bg: 'cyan.100' }}
         p={4}
         //TODO: リンク先のページに遷移する
-        onClick={() => alert('遷移先のページに遷移する')}
+        onClick={() => alert('予定詳細のページに遷移する')}
         borderRadius='10px'
       >
         <Text fontSize='2xl'>{schedule.description}</Text>
