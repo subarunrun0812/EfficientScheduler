@@ -12,6 +12,7 @@ import { Schedule } from '../schedule/type'
 import { CandidateSchedule } from '../schedule/CandidateSchedulesTemplate'
 import { SelectSchedule } from '../schedule/SelectSchedule'
 import { ChangeEvent, useState } from 'react'
+import { useRouter } from 'next/navigation'
 
 interface ScheduleDetailProps {
   schedule: Schedule
@@ -63,6 +64,12 @@ export const ScheduleDetailTemplate = ({
     { ssr: true },
   )
 
+  const router = useRouter();
+  const handleButtonClick = () => {
+    // 予定フォームに遷移
+    router.push('/home');
+  };
+
   return (
     <Box mt={10} mb={4}>
       <Flex
@@ -102,9 +109,7 @@ export const ScheduleDetailTemplate = ({
             variant='outline' // ボタンのスタイル。枠線のみ
             size='lg' // ボタンのサイズ
             w='100%' // 幅をいっぱいに
-            onClick={() => {
-              alert(selectedValues)
-            }}
+            onClick={handleButtonClick}
             isDisabled={selectedValues.length !== 1}
           >
             決定
@@ -117,7 +122,10 @@ export const ScheduleDetailTemplate = ({
             size='lg' // ボタンのサイズ
             w='100%' // 幅をいっぱいに
             onClick={() => {
-              confirm('この仮予定を削除しますか？')
+              if (confirm('この仮予定を削除しますか？')) {
+                // TODO:削除処理
+                router.push('/home');
+              }
             }}
           >
             削除
