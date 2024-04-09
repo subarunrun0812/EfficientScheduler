@@ -2,10 +2,16 @@
 
 import { SimpleGrid, Box, Text, Divider } from '@chakra-ui/react'
 import { Schedule } from './type'
+import { useRouter } from 'next/navigation'
+
 
 interface ScheduleListProps {
   width?: string | number
   schedules: Schedule[]
+}
+
+interface ScheduleDetailsProps {
+  id?: string | number
 }
 
 export const ScheduleList = ({ width, schedules }: ScheduleListProps) => {
@@ -16,6 +22,11 @@ export const ScheduleList = ({ width, schedules }: ScheduleListProps) => {
 
   const sortedSchedules = sortSchedulesByDate(schedules)
 
+  // 予定フォームに遷移する関数
+  const router = useRouter();
+  const handleButtonClick = ({ id }: ScheduleDetailsProps) => {
+    router.push(`/detail?id=${id}`);
+  };
   const renderScheduleItem = (schedule: Schedule) => {
     return (
       <Box
@@ -24,9 +35,9 @@ export const ScheduleList = ({ width, schedules }: ScheduleListProps) => {
         textAlign='center'
         cursor='pointer'
         _hover={{ bg: 'cyan.100' }}
-        //TODO: リンク先のページに遷移する
         p={4}
-        onClick={() => alert('遷移先のページに遷移する')}
+        //リンク先のページに遷移する
+        onClick={() => handleButtonClick({ id: schedule.id })}
         borderRadius='10px'
       >
         <Text fontSize='2xl'>{schedule.description}</Text>
@@ -40,13 +51,13 @@ export const ScheduleList = ({ width, schedules }: ScheduleListProps) => {
 
   return (
     <Box
-      border='2px'
-      borderColor='cyan.700'
-      borderStyle='solid'
-      padding='10px'
+      border="2px"
+      borderColor="cyan.700"
+      borderStyle="solid"
+      padding="10px"
       width={width}
-      borderRadius='30px'
-      borderWidth='3px' // Increase the border width to make it thicker
+      borderRadius="30px"
+      borderWidth="3px"
     >
       <Text fontSize='3xl' textAlign='center'>
         調整中の予定一覧
