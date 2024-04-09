@@ -9,7 +9,7 @@ import { ScheduleStatus } from '@/backend/domain/model/schedule/scheduleStatus'
 export class Schedule {
   constructor(
     private readonly scheduleId: ScheduleId,
-    private readonly userId: string,  // TODO: クラスにするかも
+    private readonly userId: string, // TODO: クラスにするかも
     readonly title: string,
     readonly duration: duration.Duration,
     readonly place: Place,

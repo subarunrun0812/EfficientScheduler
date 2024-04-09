@@ -4,18 +4,18 @@ import { TimeSlot } from '../schedule/timeSlot'
 import { AvailableTime } from './availableTime'
 
 export class Calendar {
-    constructor() { }
+  constructor() {}
 
-    // 予定の候補を作成
-    createSlots(
-        scheduleDuration: duration.Duration, 
-        availableTime: AvailableTime,
-        timeBuffer: duration.Duration
-    ): TimeSlot[] {
-        return []
-    }
+  // 予定の候補を作成
+  createSlots(
+    scheduleDuration: duration.Duration,
+    availableTime: AvailableTime,
+    timeBuffer: duration.Duration,
+  ): TimeSlot[] {
+    return []
+  }
 
-    async addSchedule(schedule: Schedule): Promise<void> {
-        return 
-    }
+  async addSchedule(schedule: Schedule): Promise<void> {
+    return
+  }
 }

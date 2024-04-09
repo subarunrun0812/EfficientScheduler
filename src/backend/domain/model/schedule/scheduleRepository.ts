@@ -2,7 +2,6 @@ import { Schedule } from './schedule'
 import { ScheduleId } from './scheduleId'
 
 export interface IScheduleRepository {
-    save(schedule: Schedule): Promise<void> 
-    findById(id: ScheduleId): Promise<Schedule>
-    findByUserId(userId: string, startDate: Date, endDate: Date): Promise<Schedule[]>
+  save(schedule: Schedule): Promise<void>
+  find(id: ScheduleId): Promise<Schedule>
 }

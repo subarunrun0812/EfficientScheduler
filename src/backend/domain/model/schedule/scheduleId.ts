@@ -1,13 +1,13 @@
-import { IdGenerator } from "../../common/idGenerator";
+import { IdGenerator } from '../../common/idGenerator'
 
 export class ScheduleId {
-    private readonly value: string
+  private readonly value: string
 
-    constructor(private readonly idGenerator: IdGenerator) {
-        this.value = idGenerator.generate()
-    }
+  constructor(private readonly idGenerator: IdGenerator) {
+    this.value = idGenerator.generate()
+  }
 
-    getId(): string {
-        return this.value
-    }
+  getId(): string {
+    return this.value
+  }
 }

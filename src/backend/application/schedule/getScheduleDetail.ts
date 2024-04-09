@@ -3,25 +3,25 @@ import { ScheduleId } from '@/backend/domain/model/schedule/scheduleId'
 import { IScheduleRepository } from '@/backend/domain/model/schedule/scheduleRepository'
 
 export type GetScheduleDetailUseCaseInput = {
-    scheduleId: ScheduleId
+  scheduleId: ScheduleId
 }
 
 export type GetScheduleDetailUseCaseOutput = {
-    schedule: Schedule
+  schedule: Schedule
 }
 
 export class GetScheduleDetailUseCase {
-    constructor(
-        private readonly scheduleRepository: IScheduleRepository,
-    ) {}
+  constructor(private readonly scheduleRepository: IScheduleRepository) {}
 
-    async execute(
-        input: GetScheduleDetailUseCaseInput
-        ): Promise<GetScheduleDetailUseCaseOutput> {
-        const schedule = await this.scheduleRepository.find(input.scheduleId).catch(_ => null)
-        if (schedule === null) {
-            throw new Error('Schedule not found')
-        }
-        return { schedule }
+  async execute(
+    input: GetScheduleDetailUseCaseInput,
+  ): Promise<GetScheduleDetailUseCaseOutput> {
+    const schedule = await this.scheduleRepository
+      .find(input.scheduleId)
+      .catch((_) => null)
+    if (schedule === null) {
+      throw new Error('Schedule not found')
     }
+    return { schedule }
+  }
 }

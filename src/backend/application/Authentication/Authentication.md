@@ -15,7 +15,9 @@ DB --> DC[認可されて、リダイレクトされる。]
 DC --> DD[ユーザーの登録・session_idの割り当てが行われる]:::col
 DD --> E:::col
 ```
+
 ---
+
 ```mermaid
 sequenceDiagram
     participant User as ユーザー
@@ -36,4 +38,5 @@ sequenceDiagram
     Server -->> Browser: リソースを返す
 
 ```
+
 ---
