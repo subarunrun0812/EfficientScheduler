@@ -1,11 +1,11 @@
 import { IdGenerator } from '@/backend/domain/common/idGenerator'
-import { AvailableTime } from '@/backend/domain/model/calendar/availableTime'
-import { Place } from '@/backend/domain/model/schedule/place'
-import { Schedule } from '@/backend/domain/model/schedule/schedule'
-import { ScheduleId } from '@/backend/domain/model/schedule/scheduleId'
-import { IScheduleRepository } from '@/backend/domain/model/schedule/scheduleRepository'
-import { ScheduleStatus } from '@/backend/domain/model/schedule/scheduleStatus'
-import { TimeSlot } from '@/backend/domain/model/schedule/timeSlot'
+import { AvailableTime } from '@/backend/domain/model/old/calendar/availableTime'
+import { Place } from '@/backend/domain/model/old/schedule/place'
+import { Schedule } from '@/backend/domain/model/old/schedule/schedule'
+import { ScheduleId } from '@/backend/domain/model/old/schedule/scheduleId'
+import { IScheduleRepository } from '@/backend/domain/model/old/schedule/scheduleRepository'
+import { ScheduleStatus } from '@/backend/domain/model/old/schedule/scheduleStatus'
+import { TimeSlot } from '@/backend/domain/model/old/schedule/timeSlot'
 import duration from 'dayjs/plugin/duration'
 
 export type ReserveTentativeSlotsUseCaseInput = {

@@ -1,5 +1,5 @@
 // 仮予定一覧の取得(トップページ左)
-import { Schedule } from '@/backend/domain/model/schedule/schedule'
+import { Schedule } from '@/backend/domain/model/old/schedule/schedule'
 import { IGetTentativeScheduleListQueryService } from './query_service/getTentativeScheduleList'
 
 // ユーザー情報をもらう

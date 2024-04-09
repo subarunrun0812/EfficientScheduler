@@ -1,6 +1,6 @@
-import { IScheduleRepository } from '@/backend/domain/model/schedule/scheduleRepository'
-import { ICalendarRepository } from '@/backend/domain/model/calendar/calendarRepository'
-import { ScheduleId } from '@/backend/domain/model/schedule/scheduleId'
+import { IScheduleRepository } from '@/backend/domain/model/old/schedule/scheduleRepository'
+import { ICalendarRepository } from '@/backend/domain/model/old/calendar/calendarRepository'
+import { ScheduleId } from '@/backend/domain/model/old/schedule/scheduleId'
 
 export type ConfirmSlotUseCaseInput = {
   currentUserId: string

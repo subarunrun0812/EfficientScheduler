@@ -1,6 +1,6 @@
-import { Schedule } from '@/backend/domain/model/schedule/schedule'
-import { ScheduleId } from '@/backend/domain/model/schedule/scheduleId'
-import { IScheduleRepository } from '@/backend/domain/model/schedule/scheduleRepository'
+import { Schedule } from '@/backend/domain/model/old/schedule/schedule'
+import { ScheduleId } from '@/backend/domain/model/old/schedule/scheduleId'
+import { IScheduleRepository } from '@/backend/domain/model/old/schedule/scheduleRepository'
 
 export type GetScheduleDetailUseCaseInput = {
   scheduleId: ScheduleId
