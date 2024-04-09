@@ -14,6 +14,7 @@ export class SelectEventTimeSlotInteractor
     private readonly googleCalendarService: IGoogleCalendarService,
   ) {}
 
+  // TODO: 外部カレンダーに対する重複チェックのロジックが, アプリケーション層に漏れているのが気になる
   async execute(
     input: SelectEventTimeSlotInput,
   ): Promise<SelectEventTimeSlotOutput> {
@@ -23,12 +24,10 @@ export class SelectEventTimeSlotInteractor
     if (!userCalendar) {
       throw new Error('calendar not found')
     }
-
     const event = userCalendar.getEvent(eventId)
     if (!event) {
       throw new Error('event not found')
     }
-
     const timeSlot = event.findTimeSlot(timeSlotId)
     if (!timeSlot) {
       throw new Error('time slot not found')
@@ -47,6 +46,8 @@ export class SelectEventTimeSlotInteractor
     // スロット確保可能
     event.selectTimeSlot(timeSlotId)
     await this.calendarRepository.save(userCalendar)
+
+    // TODO: Google Calendar への登録
 
     return
   }
