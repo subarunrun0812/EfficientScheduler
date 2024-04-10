@@ -1,8 +1,23 @@
-import { type NextRequest } from 'next/server'
+import { type NextRequest, NextResponse } from 'next/server'
 import { updateSession } from '@/utils/supabase/middleware'
+import { createClient } from '@/utils/supabase/server'
 
 export async function middleware(request: NextRequest) {
-  return await updateSession(request)
+  const res = await updateSession(request)
+
+  const supabase = createClient()
+  const { data, error } = await supabase.auth.getUser()
+  if (error || data.user === null) {
+    // 未ログインの場合, ログインページにリダイレクト
+    // ただし, 認証を邪魔をしないようにする
+    if (request.nextUrl.pathname === '/' || request.nextUrl.pathname === '/auth/callback') {
+      // do nothing
+    } else {
+      return NextResponse.redirect(request.nextUrl.origin)
+    }
+  }
+
+  return res
 }
 
 export const config = {
