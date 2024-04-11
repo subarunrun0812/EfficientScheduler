@@ -1,39 +1,35 @@
 import { IUserRepository } from '@/backend/domain/model/user/userRepository'
 import { User } from '@/backend/domain/model/user/user'
 import { PrismaClient } from '@prisma/client'
+import { createClient } from '@/utils/supabase/server'
 
 export class UserRepository implements IUserRepository {
-  private prisma: PrismaClient
-
-  constructor() {
-    this.prisma = new PrismaClient()
-  }
+  private prisma = new PrismaClient()
+  private supabase = createClient()
 
   async find(id: string): Promise<User | null> {
-    const user_DB = await this.prisma.user_DB.findUnique({
-      where: { user_id: id }, // 引数のidをuser_idとして検索条件に使用する
-      select: {
-        user_id: true,
-        name: true,
-      },
-    })
-    if (!user_DB) return null // ユーザーが見つからない場合は null を返す
-    const user: User = {
-      id: user_DB.user_id,
-      name: user_DB.name,
+    const userResponse = await this.supabase.auth.getUser()
+    const supabaseUser = userResponse.data.user
+    if (!supabaseUser) {
+      return null
     }
-    return user // User オブジェクトを返す
+
+    const userName: string | undefined =
+      supabaseUser.identities?.[0]?.identity_data?.name
+    if (!userName) {
+      return null
+    }
+    const user: User = {
+      id: supabaseUser.id,
+      name: userName,
+    }
+    return user
   }
 
   async save(user: User): Promise<void> {
     try {
-      await this.prisma.user_DB.create({
-        data: {
-          user_id: user.id,
-          name: user.name,
-          email: 'test@test', //user.email,
-        },
-      })
+      // TODO: Supabase のユーザー情報も更新する (現状 name の変更はしないため未対応)
+      // do nothing for now
     } catch (error) {
       console.error('Error saving user:', error)
     }
@@ -41,8 +37,11 @@ export class UserRepository implements IUserRepository {
 
   async delete(user: User): Promise<void> {
     try {
-      await this.prisma.user_DB.delete({
-        where: { user_id: user.id },
+      // TODO: Supabase のユーザー情報も削除する
+      this.prisma.user.delete({
+        where: {
+          id: user.id,
+        },
       })
     } catch (error) {
       console.error('Error deleting user:', error)

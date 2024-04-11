@@ -13,41 +13,43 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User_DB {
-  id        Int       @id @default(autoincrement())
-  user_id   String    @unique
-  name      String
-  email     String
-  // 他のカラムも追加することができます
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  // 仮予定との関連を定義
-  Events Event_DB[]
+// ユーザーの基本情報は Supabase の auth.users に保存
+// それ以外のシステム固有の情報を保存するテーブル
+// id は auth.users と同じにするため, default(uuid()) は使わない
+model User {
+  id        String   @id
+  Events    Event[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
-model Event_DB {
-  id               Int           @id @default(autoincrement())
-  event_id         String        @unique
-  title            String
-  description      String?
-  duration         Int           // 所要時間（必要に応じて追加）
-  startSecureTime  DateTime      // 確保開始時間（必要に応じて追加）
-  endSecureTime    DateTime      // 確保終了時間（必要に応じて追加）
-  margin           Int?           // マージンの時間（必要に応じて追加）
-  createdAt        DateTime       @default(now())
-  // ユーザーとの関連を定義
-  user             User_DB           @relation(fields: [user_id], references: [id])
-  user_id           Int
-  // 仮日程との関連を定義
-  TimeSlots   TimeSlot_DB[]
+model Event {
+  id           String      @id @default(uuid())
+  title        String
+  // location は別テーブルでなくてよいか?
+  locationName String
+  // User が削除されたら Event も削除される
+  User         User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId       String
+  TimeSlot     TimeSlot[]
+  status       EventStatus
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
 }
 
-model TimeSlot_DB {
-  id                   Int       @id @default(autoincrement())
-  TentativeDate_Id     String    @unique
-  startTime            DateTime // 開始時間（必要に応じて追加）
-  endTime              DateTime // 終了時間（必要に応じて追加）
-  // 仮予定との関連を定義
-  event    Event_DB   @relation(fields: [event_id], references: [id])
-  event_id Int
+enum EventStatus {
+  CONFIRMED
+  TENTATIVE
+}
+
+model TimeSlot {
+  id        String   @id @default(uuid())
+  startTime DateTime
+  endTime   DateTime
+  Event     Event    @relation(fields: [eventId], references: [id])
+  eventId   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([eventId, startTime, endTime])
 }
