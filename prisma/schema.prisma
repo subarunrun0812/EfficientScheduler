@@ -25,22 +25,25 @@ model User {
 }
 
 model TentativeSchedule {
-  id        Int       @id @default(autoincrement())
-  title     String
-  description String?
-  // 他のカラムも追加することができます
+  id               Int            @id @default(autoincrement())
+  title            String
+  description      String?
+  duration         Int           // 所要時間（必要に応じて追加）
+  startSecureTime  DateTime      // 確保開始時間（必要に応じて追加）
+  endSecureTime    DateTime      // 確保終了時間（必要に応じて追加）
+  margin           Int?           // マージンの時間（必要に応じて追加）
+  createdAt        DateTime       @default(now())
   // ユーザーとの関連を定義
-  user      User      @relation(fields: [userId], references: [id])
-  userId    Int
+  user             User           @relation(fields: [userId], references: [id])
+  userId           Int
   // 仮日程との関連を定義
-  tentativeDates TentativeDate[]
+  tentativeDates   TentativeDate[]
 }
 
 model TentativeDate {
   id                   Int       @id @default(autoincrement())
-  date                 DateTime
-  time                 DateTime
-  // 他のカラムも追加することができます
+  startTime            DateTime // 開始時間（必要に応じて追加）
+  endTime              DateTime // 終了時間（必要に応じて追加）
   // 仮予定との関連を定義
   tentativeSchedule    TentativeSchedule @relation(fields: [tentativeScheduleId], references: [id])
   tentativeScheduleId  Int

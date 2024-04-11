@@ -14,6 +14,11 @@ CREATE TABLE "TentativeSchedule" (
     "id" SERIAL NOT NULL,
     "title" TEXT NOT NULL,
     "description" TEXT,
+    "duration" INTEGER NOT NULL,
+    "startSecureTime" TIMESTAMP(3) NOT NULL,
+    "endSecureTime" TIMESTAMP(3) NOT NULL,
+    "margin" INTEGER,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "userId" INTEGER NOT NULL,
 
     CONSTRAINT "TentativeSchedule_pkey" PRIMARY KEY ("id")
@@ -22,8 +27,8 @@ CREATE TABLE "TentativeSchedule" (
 -- CreateTable
 CREATE TABLE "TentativeDate" (
     "id" SERIAL NOT NULL,
-    "date" TIMESTAMP(3) NOT NULL,
-    "time" TIMESTAMP(3) NOT NULL,
+    "startTime" TIMESTAMP(3) NOT NULL,
+    "endTime" TIMESTAMP(3) NOT NULL,
     "tentativeScheduleId" INTEGER NOT NULL,
 
     CONSTRAINT "TentativeDate_pkey" PRIMARY KEY ("id")
