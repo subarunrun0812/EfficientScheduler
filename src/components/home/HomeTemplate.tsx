@@ -2,10 +2,10 @@
 
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
-import { Box, HStack, VStack, useBreakpointValue } from '@chakra-ui/react'
-import { ScheduleList } from '../schedule/ScheduleList'
-import { Schedule } from '../schedule/type'
-import { CreateScheduleButton } from '../schedule/CreateScheduleButton'
+import { Box, Flex, HStack, VStack, useBreakpointValue } from '@chakra-ui/react'
+import { ScheduleList } from './ScheduleList'
+import { Schedule } from '../type/type'
+import { CreateScheduleButton } from './CreateScheduleButton'
 
 export const HomeTemplate = () => {
   const breakpoint = useBreakpointValue(
@@ -60,25 +60,25 @@ export const HomeTemplate = () => {
   return breakpoint ? (
     // mobile view
     <VStack gap={4}>
-      <Box padding={5} width='100%'>
-        <CreateScheduleButton width='60%' height='70px' />
+      <VStack padding={4} gap={4} width='100%'>
+        <CreateScheduleButton width='100%' height='70px' />
         <ScheduleList width='100%' schedules={scheduleList} />
-      </Box>
+      </VStack>
       <Box width='100%' padding={10}>
         <FullCalendar plugins={[dayGridPlugin]} initialView='dayGridMonth' />
       </Box>
     </VStack>
   ) : (
     <Box padding={5}>
-      <HStack gap={5}>
+      <Flex gap={5}>
         <VStack width='30%'>
-          <CreateScheduleButton width='60%' height='100px' />
+          <CreateScheduleButton width='70%' height='90px' />
           <ScheduleList width='100%' schedules={scheduleList} />
         </VStack>
         <Box width='70%'>
           <FullCalendar plugins={[dayGridPlugin]} initialView='dayGridMonth' />
         </Box>
-      </HStack >
-    </Box >
+      </Flex>
+    </Box>
   )
 }
