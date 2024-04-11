@@ -12,3 +12,36 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id        Int       @id @default(autoincrement())
+  name      String
+  email     String
+  // 他のカラムも追加することができます
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  // 仮予定との関連を定義
+  tentativeSchedules TentativeSchedule[]
+}
+
+model TentativeSchedule {
+  id        Int       @id @default(autoincrement())
+  title     String
+  description String?
+  // 他のカラムも追加することができます
+  // ユーザーとの関連を定義
+  user      User      @relation(fields: [userId], references: [id])
+  userId    Int
+  // 仮日程との関連を定義
+  tentativeDates TentativeDate[]
+}
+
+model TentativeDate {
+  id                   Int       @id @default(autoincrement())
+  date                 DateTime
+  time                 DateTime
+  // 他のカラムも追加することができます
+  // 仮予定との関連を定義
+  tentativeSchedule    TentativeSchedule @relation(fields: [tentativeScheduleId], references: [id])
+  tentativeScheduleId  Int
+}
