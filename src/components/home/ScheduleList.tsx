@@ -1,9 +1,8 @@
 'use client'
 
 import { SimpleGrid, Box, Text, Divider } from '@chakra-ui/react'
-import { Schedule } from './type'
+import { Schedule } from '../type/type'
 import { useRouter } from 'next/navigation'
-
 
 interface ScheduleListProps {
   width?: string | number
@@ -23,10 +22,10 @@ export const ScheduleList = ({ width, schedules }: ScheduleListProps) => {
   const sortedSchedules = sortSchedulesByDate(schedules)
 
   // 予定フォームに遷移する関数
-  const router = useRouter();
+  const router = useRouter()
   const handleButtonClick = ({ id }: ScheduleDetailsProps) => {
-    router.push(`/detail?id=${id}`);
-  };
+    router.push(`/detail?id=${id}`)
+  }
   const renderScheduleItem = (schedule: Schedule) => {
     return (
       <Box
@@ -51,13 +50,13 @@ export const ScheduleList = ({ width, schedules }: ScheduleListProps) => {
 
   return (
     <Box
-      border="2px"
-      borderColor="cyan.700"
-      borderStyle="solid"
-      padding="10px"
+      border='2px'
+      borderColor='cyan.700'
+      borderStyle='solid'
+      padding='10px'
       width={width}
-      borderRadius="30px"
-      borderWidth="3px"
+      borderRadius='30px'
+      borderWidth='3px'
     >
       <Text fontSize='3xl' textAlign='center'>
         調整中の予定一覧

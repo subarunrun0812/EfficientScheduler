@@ -1,6 +1,6 @@
 import { ScheduleDetailTemplate } from '@/components/detail/ScheduleDetailTemplate'
-import { CandidateSchedule } from '@/components/schedule/CandidateSchedulesTemplate'
-import { Schedule } from '@/components/schedule/type'
+import { CandidateSchedule } from '@/components/candidate/CandidateSchedulesTemplate'
+import { Schedule } from '@/components/type/type'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
