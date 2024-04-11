@@ -22,12 +22,12 @@ model User_DB {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   // 仮予定との関連を定義
-  tentativeSchedules TentativeSchedule_DB[]
+  Events Event_DB[]
 }
 
-model TentativeSchedule_DB {
-  id               Int            @id @default(autoincrement())
-  TentativeScheduleId String
+model Event_DB {
+  id               Int           @id @default(autoincrement())
+  event_id         String        @unique
   title            String
   description      String?
   duration         Int           // 所要時間（必要に応じて追加）
@@ -36,18 +36,18 @@ model TentativeSchedule_DB {
   margin           Int?           // マージンの時間（必要に応じて追加）
   createdAt        DateTime       @default(now())
   // ユーザーとの関連を定義
-  user             User_DB           @relation(fields: [userId], references: [id])
-  userId           Int
+  user             User_DB           @relation(fields: [user_id], references: [id])
+  user_id           Int
   // 仮日程との関連を定義
-  tentativeDates   TentativeDate_DB[]
+  TimeSlots   TimeSlot_DB[]
 }
 
-model TentativeDate_DB {
+model TimeSlot_DB {
   id                   Int       @id @default(autoincrement())
-  tentativeDateId      String
+  TentativeDate_Id     String    @unique
   startTime            DateTime // 開始時間（必要に応じて追加）
   endTime              DateTime // 終了時間（必要に応じて追加）
   // 仮予定との関連を定義
-  tentativeSchedule    TentativeSchedule_DB @relation(fields: [tentativeScheduleId], references: [id])
-  tentativeScheduleId  Int
+  event    Event_DB   @relation(fields: [event_id], references: [id])
+  event_id Int
 }
