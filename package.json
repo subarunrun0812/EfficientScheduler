@@ -21,6 +21,7 @@
     "@fullcalendar/core": "^6.1.11",
     "@fullcalendar/daygrid": "^6.1.11",
     "@fullcalendar/react": "^6.1.11",
+    "@prisma/client": "^5.12.1",
     "@supabase/ssr": "^0.3.0",
     "@supabase/supabase-js": "^2.42.0",
     "@yamada-ui/calendar": "^1.2.6",
