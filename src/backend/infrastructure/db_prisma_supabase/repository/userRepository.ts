@@ -8,6 +8,7 @@ export class UserRepository implements IUserRepository {
   private supabase = createClient()
 
   async find(id: string): Promise<User | null> {
+    // TODO: id からユーザー情報を取得する (セッション情報から直接取得できちゃう)
     const userResponse = await this.supabase.auth.getUser()
     const supabaseUser = userResponse.data.user
     if (!supabaseUser) {
