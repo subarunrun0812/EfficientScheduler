@@ -1,5 +1,5 @@
 import { Metadata } from 'next'
-import { HomeTemplate } from '@/components/home/CalendarTemplate'
+import { HomeTemplate } from '@/components/home/HomeTemplate'
 
 export const metadata: Metadata = {
   title: 'ホーム',

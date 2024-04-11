@@ -8,9 +8,9 @@ import {
   Flex,
   useBreakpointValue,
 } from '@chakra-ui/react'
-import { Schedule } from '../schedule/type'
-import { CandidateSchedule } from '../schedule/CandidateSchedulesTemplate'
-import { SelectSchedule } from '../schedule/SelectSchedule'
+import { Schedule } from '../type/type'
+import { CandidateSchedule } from '../candidate/CandidateSchedulesTemplate'
+import { SelectSchedule } from '../candidate/SelectSchedule'
 import { ChangeEvent, useState } from 'react'
 import { useRouter } from 'next/navigation'
 
@@ -64,11 +64,11 @@ export const ScheduleDetailTemplate = ({
     { ssr: true },
   )
 
-  const router = useRouter();
+  const router = useRouter()
   const handleButtonClick = () => {
     // 予定フォームに遷移
-    router.push('/home');
-  };
+    router.push('/home')
+  }
 
   return (
     <Box mt={10} mb={4}>
@@ -124,7 +124,7 @@ export const ScheduleDetailTemplate = ({
             onClick={() => {
               if (confirm('この仮予定を削除しますか？')) {
                 // TODO:削除処理
-                router.push('/home');
+                router.push('/home')
               }
             }}
           >
