@@ -13,19 +13,21 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
+model User_DB {
   id        Int       @id @default(autoincrement())
+  user_id   String    @unique
   name      String
   email     String
   // 他のカラムも追加することができます
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   // 仮予定との関連を定義
-  tentativeSchedules TentativeSchedule[]
+  tentativeSchedules TentativeSchedule_DB[]
 }
 
-model TentativeSchedule {
+model TentativeSchedule_DB {
   id               Int            @id @default(autoincrement())
+  TentativeScheduleId String
   title            String
   description      String?
   duration         Int           // 所要時間（必要に応じて追加）
@@ -34,17 +36,18 @@ model TentativeSchedule {
   margin           Int?           // マージンの時間（必要に応じて追加）
   createdAt        DateTime       @default(now())
   // ユーザーとの関連を定義
-  user             User           @relation(fields: [userId], references: [id])
+  user             User_DB           @relation(fields: [userId], references: [id])
   userId           Int
   // 仮日程との関連を定義
-  tentativeDates   TentativeDate[]
+  tentativeDates   TentativeDate_DB[]
 }
 
-model TentativeDate {
+model TentativeDate_DB {
   id                   Int       @id @default(autoincrement())
+  tentativeDateId      String
   startTime            DateTime // 開始時間（必要に応じて追加）
   endTime              DateTime // 終了時間（必要に応じて追加）
   // 仮予定との関連を定義
-  tentativeSchedule    TentativeSchedule @relation(fields: [tentativeScheduleId], references: [id])
+  tentativeSchedule    TentativeSchedule_DB @relation(fields: [tentativeScheduleId], references: [id])
   tentativeScheduleId  Int
 }
