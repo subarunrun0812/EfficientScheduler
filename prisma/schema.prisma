@@ -46,7 +46,8 @@ model TimeSlot {
   id        String   @id @default(uuid())
   startTime DateTime
   endTime   DateTime
-  Event     Event    @relation(fields: [eventId], references: [id])
+  // Event が削除されたら TimeSlot も削除される
+  Event     Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
   eventId   String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
