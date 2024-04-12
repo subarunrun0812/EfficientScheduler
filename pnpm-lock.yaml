@@ -41,6 +41,9 @@ dependencies:
   '@fullcalendar/react':
     specifier: ^6.1.11
     version: 6.1.11(@fullcalendar/core@6.1.11)(react-dom@18.2.0)(react@18.2.0)
+  '@googleapis/calendar':
+    specifier: ^9.7.0
+    version: 9.7.0
   '@prisma/client':
     specifier: ^5.12.1
     version: 5.12.1(prisma@5.12.1)
@@ -1544,6 +1547,16 @@ packages:
       '@fullcalendar/core': 6.1.11
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+    dev: false
+
+  /@googleapis/calendar@9.7.0:
+    resolution: {integrity: sha512-sZe0YCihDfO14Y1Zg4Qqzof/w5Vqa08ujAfZioXmIsaAu4+zvVsL+BJ1Y6I5LY60ARG4Zf2chjP+tKP3UdPJFQ==}
+    engines: {node: '>=12.0.0'}
+    dependencies:
+      googleapis-common: 7.1.0
+    transitivePeerDependencies:
+      - encoding
+      - supports-color
     dev: false
 
   /@humanwhocodes/config-array@0.11.14:

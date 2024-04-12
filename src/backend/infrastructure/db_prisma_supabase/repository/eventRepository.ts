@@ -2,8 +2,8 @@
 import { IEventRepository } from '@/backend/domain/model/event/eventRepository'
 import { TimeSlot } from '@/backend/domain/model/event/timeSlot'
 import { PrismaClient } from '@prisma/client'
-import { Dayjs } from 'dayjs'
-import { Event } from '@/backend/domain/model/event/event'
+import dayjs, { Dayjs } from 'dayjs'
+import { Event, EventStatus } from '@/backend/domain/model/event/event'
 
 export class EventRepository implements IEventRepository {
   private prisma = new PrismaClient()
@@ -11,34 +11,24 @@ export class EventRepository implements IEventRepository {
   async find(id: string): Promise<Event | null> {
     const eventResponse = await this.prisma.event.findUnique({
       where: { id: id },
-      select: {
-        id: true,
-        title: true,
-        locationName: true,
-        status: true,
-        userId: true,
-        TimeSlot: {
-          select: {
-            id: true,
-            startTime: true,
-            endTime: true,
-            eventId: true,
-          },
-        },
+      include: {
+        TimeSlot: true,
       },
     })
     if (!eventResponse) {
       return null
     }
+
     const timeSlots = eventResponse.TimeSlot.map(
-      (timeSlot: { startTime: Dayjs; endTime: Dayjs; id: string }) =>
-        new TimeSlot(timeSlot.startTime, timeSlot.endTime, timeSlot.id),
+      (ts) => new TimeSlot(dayjs(ts.startTime), dayjs(ts.endTime), ts.id),
     )
     return new Event(
       eventResponse.title,
       eventResponse.locationName,
       timeSlots,
-      eventResponse.status,
+      // Prisma の型定義が変なので, 頑張って変換してる
+      // refs: https://github.com/prisma/prisma/issues/8446
+      eventResponse.status.toLowerCase() as EventStatus,
       eventResponse.id,
     )
   }

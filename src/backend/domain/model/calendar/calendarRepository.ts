@@ -3,7 +3,7 @@ import { Calendar } from './calendar'
 
 export interface ICalendarRepository {
   save(calendar: Calendar): Promise<void>
-  find(id: string): Promise<Event | null>
-  findByUserId(userId: string): Promise<Event[] | null>
+  find(id: string): Promise<Calendar | null>
+  findByUserId(userId: string): Promise<Calendar | null>
   delete(eventId: string): Promise<void>
 }

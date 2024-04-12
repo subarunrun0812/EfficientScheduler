@@ -6,9 +6,11 @@ import { TimeSlot } from '@/backend/domain/model/event/timeSlot'
 
 export class Calendar {
   readonly id: string = uuidv4()
-  private events: Event[] = []
 
-  constructor(readonly userId: string) {}
+  constructor(
+    private readonly userId: string,
+    private events: Event[] = [],
+  ) {}
 
   addEvent(event: Event): void {
     this.events.push(event)

@@ -39,7 +39,7 @@ export class CalendarRepository implements ICalendarRepository {
   // イベントIDからslotを検索
   // これいらないかも？
   // eventRepositoryにあるやつでいいかも
-  async find(id: string): Promise<Event | null> {
+  async find(id: string): Promise<Calendar | null> {
     const eventResponse = await this.prisma.event.findUnique({
       where: { id: id },
       select: {
@@ -63,7 +63,7 @@ export class CalendarRepository implements ICalendarRepository {
   }
 
   // ユーザーIDを元に仮予定を検索
-  async findByUserId(userId: string): Promise<Event[] | null> {
+  async findByUserId(userId: string): Promise<Calendar | null> {
     const eventResponse = await this.prisma.event.findMany({
       where: { userId: userId },
       select: {

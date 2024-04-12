@@ -13,24 +13,14 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// ユーザーの基本情報は Supabase の auth.users に保存
-// それ以外のシステム固有の情報を保存するテーブル
-// id は auth.users と同じにするため, default(uuid()) は使わない
-model User {
-  id        String   @id
-  Events    Event[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
+// ユーザーの情報は Supabase の auth.users に保存
 
 model Event {
-  id           String      @id @default(uuid())
+  id           String      @id 
+  userId       String
   title        String
   // location は別テーブルでなくてよいか?
   locationName String
-  // User が削除されたら Event も削除される
-  User         User        @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId       String
   TimeSlot     TimeSlot[]
   status       EventStatus
   createdAt    DateTime    @default(now())
@@ -43,7 +33,7 @@ enum EventStatus {
 }
 
 model TimeSlot {
-  id        String   @id @default(uuid())
+  id        String   @id
   startTime DateTime
   endTime   DateTime
   // Event が削除されたら TimeSlot も削除される

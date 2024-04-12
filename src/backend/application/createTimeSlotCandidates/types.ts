@@ -8,6 +8,8 @@ export type CreateTimeSlotCandidatesInput = {
   endDateTime: Dayjs
   duration: Duration
   bufferDuration: Duration
+  suggestionPeriod: { startTime: Dayjs; endTime: Dayjs }
+  maxSuggestions: number
 }
 
 export type CreateTimeSlotCandidatesOutput = TimeSlot[]
