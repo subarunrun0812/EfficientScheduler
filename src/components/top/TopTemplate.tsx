@@ -18,18 +18,15 @@ export const TopTemplate = () => {
           </VStack>
         </Box>
       </Box>
-      <Box display={{ base: 'none', md: 'block' }}>
-        <Center h="100vh">
-          <Box width="90%" display="flex" alignItems="center">
-            <Image
-              src="/icon1.webp"
-              height="auto"
-              maxHeight="80%"
-              objectFit="contain"
-              alt=""
-            />
-          </Box>
-        </Center>
+      <Box display={{ base: 'none', md: 'block' }} alignItems="center" marginTop='-3%'>
+        <Image
+          src="/icon1.webp"
+          height="auto"
+          maxHeight="80%"
+          width="90%"
+          objectFit="contain"
+          alt=""
+        />
       </Box>
     </HStack >
   );
