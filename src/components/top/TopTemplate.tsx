@@ -18,6 +18,7 @@ export const TopTemplate = () => {
           </VStack>
         </Box>
       </Box>
+<<<<<<< Updated upstream
       <Box display={{ base: 'none', md: 'block' }}>
         <Center h="100vh">
           <Box width="90%" display="flex" alignItems="center">
@@ -30,6 +31,16 @@ export const TopTemplate = () => {
             />
           </Box>
         </Center>
+=======
+      <Box display={{ base: 'none', md: 'block' }} alignItems="center" marginTop='-3%'>
+        <Image
+          src="/icon1.webp"
+          height="90vh"
+          width="90%"
+          objectFit="contain"
+          alt=""
+        />
+>>>>>>> Stashed changes
       </Box>
     </HStack >
   );
