@@ -21,8 +21,7 @@ export const TopTemplate = () => {
       <Box display={{ base: 'none', md: 'block' }} alignItems="center" marginTop='-3%'>
         <Image
           src="/icon1.webp"
-          height="auto"
-          maxHeight="80%"
+          height="90vh"
           width="90%"
           objectFit="contain"
           alt=""
