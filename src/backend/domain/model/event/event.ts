@@ -10,8 +10,8 @@ export class Event {
 
   constructor(
     readonly title: string,
-    readonly location: Location,
-    private timeSlots: TimeSlot[],
+    readonly location: string, // Location型(url)をstring型に変更
+    private timeSlots: TimeSlot[] | null,
     private status: EventStatus,
     id?: string,
   ) {
