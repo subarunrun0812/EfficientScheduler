@@ -46,12 +46,10 @@ export const LoginTemplate = () => {
   }
 
   return (
-    <Center h='100vh' p={4} w='60%'>
-      <form action={logInWithGoogle}>
-        <Button leftIcon={<GoogleIcon />} type='submit'>
-          Sign in with Google
-        </Button>
-      </form>
-    </Center>
+    <form action={logInWithGoogle}>
+      <Button leftIcon={<GoogleIcon />} type='submit'>
+        Sign in with Google
+      </Button>
+    </form>
   )
 }

@@ -1,34 +1,36 @@
-import {
-  Button,
-  Center,
-  HStack,
-  Heading,
-  Image,
-  VStack,
-} from "@chakra-ui/react";
+import { Button, Center, HStack, Heading, Image, Text, VStack } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
+import { LoginTemplate } from '@/components/top/LoginTemplate'
 
 export const TopTemplate = () => {
-
   return (
-    <Center h="100vh" padding={0} w="40%" bg="cyan.300">
-      <VStack>
-        <Heading>Calendar</Heading>
-        <HStack>
-          <Image src="/icon1.webp"// Use the converted string variable
-            width="100%"
-            height="100%"
-            objectFit="fill" />
-        </HStack>
-      </VStack>
-    </Center>
+    <HStack minH='100vh'>
+      <Box width={{ base: '100%', md: '50%' }}>
+        <Box
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <VStack spacing={8}>
+            <Heading size='2xl'>Calendar app</Heading>
+            <Text fontSize='24px' textAlign='center'>This application allows you to manage your schedule effectively.</Text>
+            <LoginTemplate />
+          </VStack>
+        </Box>
+      </Box>
+      <Box display={{ base: 'none', md: 'block' }}>
+        <Center h="100vh">
+          <Box width="90%" display="flex" alignItems="center">
+            <Image
+              src="/icon1.webp"
+              height="auto"
+              maxHeight="80%"
+              objectFit="contain"
+              alt=""
+            />
+          </Box>
+        </Center>
+      </Box>
+    </HStack >
   );
 };
-
-
-/*
-contain: 画像の縦横比を維持しながら、枠内に収まる最大のサイズで表示します。
-cover: 画像の縦横比を維持しながら、枠いっぱいに表示します。必要に応じて、画像の一部が切り取られます。
-fill: 画像を枠いっぱいに引き伸ばして表示します。画像の縦横比は維持されません。
-none: 画像の元のサイズで表示します。枠からはみ出る場合は、スクロールバーが表示されます。
-scale-down: 画像の縦横比を維持しながら、枠内に収まる最小のサイズで表示します。
-*/
