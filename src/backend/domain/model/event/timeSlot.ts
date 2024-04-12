@@ -9,12 +9,16 @@ dayjs.extend(isSameOrAfter)
 dayjs.extend(isSameOrBefore)
 
 export class TimeSlot {
-  readonly id: string = uuidv4()
+  // イベントIDは引数で渡されなければ生成する形式に
+  readonly id: string
 
   constructor(
     readonly startDateTime: Dayjs,
     readonly endDateTime: Dayjs,
+    id?: string,
   ) {
+    if (id) this.id = id
+    else this.id = uuidv4()
     if (startDateTime.isAfter(endDateTime)) {
       throw new Error('startDateTime must be before endDateTime')
     }

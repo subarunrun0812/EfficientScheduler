@@ -5,14 +5,18 @@ import { TimeSlot } from '@/backend/domain/model/event/timeSlot'
 export type EventStatus = 'confirmed' | 'tentative'
 
 export class Event {
-  readonly id: string = uuidv4()
+  // イベントIDは引数で渡されなければ生成する形式に
+  readonly id: string
 
   constructor(
     readonly title: string,
     readonly location: Location,
     private timeSlots: TimeSlot[],
     private status: EventStatus,
+    id?: string,
   ) {
+    if (id) this.id = id
+    else this.id = uuidv4()
     if (status === 'confirmed' && timeSlots.length !== 1) {
       throw new Error('confirmed event must have exactly one time slot')
     }
