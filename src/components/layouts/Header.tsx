@@ -40,6 +40,7 @@ export const Header = () => {
         </Link>
       </Box>
       <Spacer />
+      {/* // TODO : login時はアイコン表示して,アイコンをクリックするとログアウトできるようにする,login前は何も表示しない */}
       {breakpoint ? (
         <Menu>
           <MenuButton

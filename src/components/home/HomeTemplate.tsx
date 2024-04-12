@@ -2,9 +2,10 @@
 
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
-import { Box, HStack, VStack, useBreakpointValue } from '@chakra-ui/react'
-import { ScheduleList } from '../schedule/ScheduleList'
-import { Schedule } from '../schedule/type'
+import { Box, Flex, HStack, VStack, useBreakpointValue } from '@chakra-ui/react'
+import { ScheduleList } from './ScheduleList'
+import { Schedule } from '../type/type'
+import { CreateScheduleButton } from './CreateScheduleButton'
 
 export const HomeTemplate = () => {
   const breakpoint = useBreakpointValue(
@@ -55,43 +56,29 @@ export const HomeTemplate = () => {
       date: 20230907,
       description: 'Finalizing project deliverables',
     },
-    {
-      id: 8,
-      title: 'Team Building',
-      date: 20230908,
-      description: 'Team building activity',
-    },
-    {
-      id: 9,
-      title: 'Client Meeting',
-      date: 20230909,
-      description: 'Meeting with a client',
-    },
-    {
-      id: 10,
-      title: 'Workshop',
-      date: 20230910,
-      description: 'Attending a workshop',
-    },
   ]
   return breakpoint ? (
     // mobile view
     <VStack gap={4}>
-      <Box padding={5} width='100%'>
+      <VStack padding={4} gap={4} width='100%'>
+        <CreateScheduleButton width='100%' height='70px' />
         <ScheduleList width='100%' schedules={scheduleList} />
-      </Box>
+      </VStack>
       <Box width='100%' padding={10}>
         <FullCalendar plugins={[dayGridPlugin]} initialView='dayGridMonth' />
       </Box>
     </VStack>
   ) : (
     <Box padding={5}>
-      <HStack gap={5}>
-        <ScheduleList width='30%' schedules={scheduleList} />
+      <Flex gap={5}>
+        <VStack width='30%'>
+          <CreateScheduleButton width='70%' height='90px' />
+          <ScheduleList width='100%' schedules={scheduleList} />
+        </VStack>
         <Box width='70%'>
           <FullCalendar plugins={[dayGridPlugin]} initialView='dayGridMonth' />
         </Box>
-      </HStack>
+      </Flex>
     </Box>
   )
 }
