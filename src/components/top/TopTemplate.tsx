@@ -4,13 +4,13 @@ import { LoginTemplate } from '@/components/top/LoginTemplate'
 
 export const TopTemplate = () => {
   return (
-    <HStack>
+    <HStack minH='100vh'>
       <Box width={{ base: '100%', md: '50%' }}>
         <Box
           display="flex"
           alignItems="center"
           justifyContent="center"
-          marginTop={{ base: '20%', md: '0%' }}>
+        >
           <VStack spacing={8}>
             <Heading size='2xl'>Calendar app</Heading>
             <Text fontSize='24px' textAlign='center'>This application allows you to manage your schedule effectively.</Text>
