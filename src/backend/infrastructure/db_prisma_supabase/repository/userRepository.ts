@@ -2,7 +2,6 @@ import { IUserRepository } from '@/backend/domain/model/user/userRepository'
 import { User } from '@/backend/domain/model/user/user'
 import { PrismaClient } from '@prisma/client'
 import { createClient } from '@/utils/supabase/server'
-import { transferableAbortController } from 'util'
 
 export class UserRepository implements IUserRepository {
   private prisma = new PrismaClient()

@@ -1,3 +1,4 @@
+// イベントIDから関連するtimeSlotを取得する
 import { IEventRepository } from '@/backend/domain/model/event/eventRepository'
 import { TimeSlot } from '@/backend/domain/model/event/timeSlot'
 import { PrismaClient } from '@prisma/client'
