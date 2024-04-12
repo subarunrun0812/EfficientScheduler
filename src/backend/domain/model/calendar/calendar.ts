@@ -31,10 +31,15 @@ export class Calendar {
     return this.events.filter((event) => event.isTentative())
   }
 
-  getTentativeEventsByPeriod(startDateTime: Dayjs, endDateTime: Dayjs): Event[] {
+  getTentativeEventsByPeriod(
+    startDateTime: Dayjs,
+    endDateTime: Dayjs,
+  ): Event[] {
     return this.events.filter((event) => {
       const timeSlots = event.getTimeSlots()
-      return timeSlots.some((timeSlot) => timeSlot.isWithin(startDateTime, endDateTime))
+      return timeSlots.some((timeSlot) =>
+        timeSlot.isWithin(startDateTime, endDateTime),
+      )
     })
   }
 
