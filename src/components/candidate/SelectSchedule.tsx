@@ -51,7 +51,7 @@ export const SelectSchedule = ({
         isChecked={isChecked}
         className='checkbox'
       >
-        <VStack align='start' w='100%'>
+        <VStack align='start' w='100%' ml={4}>
           <Box>
             <Heading size='lg' fontFamily={"TsunagiGothic"}>{title}</Heading>
           </Box>
