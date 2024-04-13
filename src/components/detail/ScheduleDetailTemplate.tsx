@@ -80,7 +80,7 @@ export const ScheduleDetailTemplate = ({
         color='gray.700'
         mt={10}
       >
-        <Heading as='h1' size='xl' color='gray.700'>
+        <Heading as='h1' size='xl' color='gray.700' fontFamily={"TsunagiGothic"}>
           予定調整確定ページ
         </Heading>
         <VStack mt={10} spacing={8} w={breakpoint ? '100%' : '40%'} p={2}>

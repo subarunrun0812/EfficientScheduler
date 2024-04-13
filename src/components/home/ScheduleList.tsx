@@ -58,7 +58,7 @@ export const ScheduleList = ({ width, schedules }: ScheduleListProps) => {
       borderRadius='30px'
       borderWidth='3px'
     >
-      <Text fontSize='3xl' textAlign='center'>
+      <Text fontSize='3xl' textAlign='center' fontFamily={"TsunagiGothic"}>
         調整中の予定一覧
       </Text>
       <Divider border='1.5px solid cyan.700' margin='10px 0' />

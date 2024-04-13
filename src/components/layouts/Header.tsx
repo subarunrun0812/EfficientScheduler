@@ -14,11 +14,13 @@ import {
   Spacer,
   useBreakpointValue,
 } from '@chakra-ui/react'
-import { HamburgerIcon } from '@chakra-ui/icons'
+import { EditIcon, HamburgerIcon } from '@chakra-ui/icons'
 import { createClient } from '@/utils/supabase/client'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { User } from '@supabase/supabase-js'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCalendarPlus, faHouseChimney, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 
 export const Header = () => {
   const [currentUser, setCurrentUser] = useState<User | null>(null)
@@ -57,9 +59,9 @@ export const Header = () => {
   const menuItems =
     currentUser !== null
       ? [
-          { label: 'ホーム', href: '/home' },
-          { label: '予定作成', href: '/form' },
-          { label: 'ログアウト', href: '/logout' },
+          { label: 'ホーム', href: '/home', icon : <FontAwesomeIcon icon={faHouseChimney} /> },
+          { label: '予定作成', href: '/form' , icon: <FontAwesomeIcon icon={faCalendarPlus} /> },
+          { label: 'ログアウト', href: '/logout', icon: <FontAwesomeIcon icon={faSignOutAlt} /> },
         ]
       : []
 
@@ -74,7 +76,7 @@ export const Header = () => {
           href='/'
           textDecoration='none'
           _hover={{ textDecoration: 'none' }}
-          fontSize='3xl'
+          fontSize='2xl'
           fontFamily={"TsunagiGothic"}
         >
           かりスケ
@@ -100,6 +102,8 @@ export const Header = () => {
                     onClick={() => {
                       logout()
                     }}
+                    icon={item.icon}
+                    fontFamily={"TsunagiGothic"}
                   >
                     {item.label}
                   </MenuItem>
@@ -111,6 +115,8 @@ export const Header = () => {
                     as={Link}
                     href={item.href}
                     _hover={{ textDecoration: 'none' }}
+                    icon={item.icon}
+                    fontFamily={"TsunagiGothic"}
                   >
                     {item.label}
                   </MenuItem>

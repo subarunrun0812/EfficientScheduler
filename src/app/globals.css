@@ -1,4 +1,27 @@
 @font-face {
   font-family: 'TsunagiGothic';
   src: url('/fonts/TsunagiGothic.ttf');
- }
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a,
+ul,
+ol,
+li,
+blockquote,
+dl,
+dd,
+dt,
+div,
+span,
+label,
+button {
+  font-family: 'TsunagiGothic', sans-serif;
+}
