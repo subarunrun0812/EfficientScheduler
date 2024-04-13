@@ -21,6 +21,12 @@ export const LoginTemplate = () => {
 
     const supabase = createClient()
 
+    const result = await supabase.auth.getUser()
+    if (result.data.user) {
+      // already signed in
+      redirect('/home')
+    }
+
     const origin = headers().get('origin')
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
