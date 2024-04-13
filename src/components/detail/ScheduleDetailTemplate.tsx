@@ -87,7 +87,7 @@ export const ScheduleDetailTemplate = ({
           <ScheduleItem label='タイトル' value={schedule.title} />
           <ScheduleItem label='説明' value={schedule.description} />
           <ScheduleItem label='作成日時' value={formatDate(schedule.date)} />
-          {/* TODO:仮日程候補を選択するためのコンポーネントを追加 */}
+          <VStack maxH='60vh' overflow='auto' w='100%'>
           {candidateSchedules.map((schedule) => (
             <SelectSchedule
               key={schedule.id}
@@ -100,8 +100,8 @@ export const ScheduleDetailTemplate = ({
               selectedRadioValue={selectedRadioValue}
             />
           ))}
+          </VStack>
         </VStack>
-        {/* TODO:予定の削除ボタンを追加 or 確認ボタンを追加 */}
         <Box w={breakpoint ? '100%' : '40%'} p={2}>
           <Button
             mt={10}
