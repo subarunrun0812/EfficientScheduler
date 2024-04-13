@@ -1,14 +1,18 @@
 import { IGoogleCalendarService } from '@/backend/domain/service/googleCalendar/googleCalendar'
-import dayjs, { Dayjs } from 'dayjs'
+import dayjs from 'dayjs'
 import { TimeSlot } from '@/backend/domain/model/event/timeSlot'
 import { Event } from '@/backend/domain/model/event/event'
-import { google } from 'googleapis'
+import { calendar_v3, google } from 'googleapis'
+import { Location } from '@/backend/domain/model/event/location'
 
 export class GoogleCalendarService implements IGoogleCalendarService {
   private readonly calendar: ReturnType<typeof google.calendar>
   private calendarIds: string[] | undefined = undefined
 
-  constructor(accessToken: string) {
+  constructor(
+    accessToken: string,
+    private readonly userId: string,
+  ) {
     const oauth = new google.auth.OAuth2()
     oauth.setCredentials({ access_token: accessToken })
 
@@ -24,10 +28,9 @@ export class GoogleCalendarService implements IGoogleCalendarService {
     }
 
     const res = await this.calendar.calendarList.list()
+    const items = res.data.items ?? []
     this.calendarIds =
-      res.data.items
-        ?.map((item) => item.id)
-        .filter((id): id is string => id != null) ?? []
+      items.map(item => item.id).filter((id): id is string => id != null) ?? []
     return this.calendarIds
   }
 
@@ -35,7 +38,35 @@ export class GoogleCalendarService implements IGoogleCalendarService {
     startDate: dayjs.Dayjs,
     endDate: dayjs.Dayjs,
   ): Promise<Event[] | undefined> {
-    return []
+    const ids = await this.getCalendarIds()
+    let calendarEventsMap = new Map<string, calendar_v3.Schema$Events>()
+    await Promise.all(
+      // string[] が () => Promise<void> にmapされる
+      ids.map(async id => {
+        const res = await this.calendar.events.list({
+          calendarId: id,
+          timeMin: startDate.toISOString(),
+          timeMax: endDate.toISOString(),
+        })
+        calendarEventsMap.set(id, res.data)
+      }),
+    )
+
+    return ids.flatMap(id => {
+      const calendarEvents = calendarEventsMap.get(id)?.items ?? []
+      return calendarEvents.map(res => {
+        const startDateTime = dayjs(res.start!.dateTime)
+        const endDateTime = dayjs(res.end!.dateTime)
+        return new Event(
+          this.userId,
+          res.summary!,
+          new Location(res.location!),
+          [new TimeSlot(startDateTime, endDateTime)],
+          'confirmed',
+          res.id!,
+        )
+      })
+    })
   }
 
   async getBusySlots(
@@ -45,7 +76,7 @@ export class GoogleCalendarService implements IGoogleCalendarService {
     const ids = await this.getCalendarIds()
     const busySlotsResponce = await this.calendar.freebusy.query({
       requestBody: {
-        items: ids.map((id) => ({ id })),
+        items: ids.map(id => ({ id })),
         timeMin: startDate.toISOString(),
         timeMax: endDate.toISOString(),
         timeZone: 'JST',
@@ -56,16 +87,31 @@ export class GoogleCalendarService implements IGoogleCalendarService {
       return []
     }
 
-    return ids.flatMap((id) => {
+    return ids.flatMap(id => {
       const busy = calendars[id]?.busy ?? []
-      return busy.map(
-        (slot): TimeSlot => new TimeSlot(dayjs(slot.start), dayjs(slot.end)),
-      )
+      return busy.map(slot => new TimeSlot(dayjs(slot.start), dayjs(slot.end)))
     })
   }
 
-  async createEvent(userId: string, event: Event): Promise<void> {
-    return
+  // event を Google Calendar に登録する
+  async createEvent(event: Event): Promise<void> {
+    if (!event.isConfirmed()) {
+      throw new Error('Event is not confirmed')
+    }
+
+    const timeSlot = event.getTimeSlots()[0]
+    await this.calendar.events.insert({
+      calendarId: 'primary',
+      requestBody: {
+        summary: event.title,
+        start: {
+          dateTime: timeSlot.startDateTime.toISOString(),
+        },
+        end: {
+          dateTime: timeSlot.endDateTime.toISOString(),
+        },
+      },
+    })
   }
 
   async isTimeSlotAvailable(timeSlot: TimeSlot): Promise<boolean> {

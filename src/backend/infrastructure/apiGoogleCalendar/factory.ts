@@ -22,6 +22,6 @@ export class GoogleCalendarServiceFactory
       throw new Error('Provider token not found')
     }
 
-    return new GoogleCalendarService(session.provider_token)
+    return new GoogleCalendarService(session.provider_token, session.user.id)
   }
 }

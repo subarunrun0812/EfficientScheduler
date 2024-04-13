@@ -9,6 +9,6 @@ export interface IGoogleCalendarService {
     endDate: Dayjs,
   ): Promise<Event[] | undefined>
   getBusySlots(startDate: Dayjs, endDate: Dayjs): Promise<TimeSlot[]>
-  createEvent(userId: string, event: Event): Promise<void>
+  createEvent(event: Event): Promise<void>
   isTimeSlotAvailable(timeSlot: TimeSlot): Promise<boolean>
 }

@@ -48,7 +48,7 @@ export class SelectEventTimeSlotInteractor
     // TODO: 失敗した場合のロールバック
     await Promise.all([
       this.eventRepository.save(event),
-      this.googleCalendarService.createEvent(userId, event),
+      this.googleCalendarService.createEvent(event),
     ])
   }
 }
