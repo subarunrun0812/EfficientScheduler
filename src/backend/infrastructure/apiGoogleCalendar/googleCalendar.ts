@@ -1,18 +1,33 @@
 import { IGoogleCalendarService } from '@/backend/domain/service/googleCalendar/googleCalendar'
 import { Dayjs } from 'dayjs'
-import { google } from 'googleapis'
+import { TimeSlot } from '@/backend/domain/model/event/timeSlot'
+import { Event } from '@/backend/domain/model/event/event'
 
-// まだ実装していない
 export class GoogleCalendarService implements IGoogleCalendarService {
-  getEventsByPeriod(
+  async getEventsByPeriod(
     userId: string,
     startDate: Dayjs,
     endDate: Dayjs,
-  ): Promise<Event[] | null> {
-    throw new Error('Method not implemented.')
+  ): Promise<Event[] | undefined> {
+    return []
   }
 
-  createEvent(userId: string, event: Event): Promise<void> {
-    throw new Error('Method not implemented.')
+  async getBusySlots(
+    userId: string,
+    startDate: Dayjs,
+    endDate: Dayjs,
+  ): Promise<TimeSlot[]> {
+    return []
+  }
+
+  async createEvent(userId: string, event: Event): Promise<void> {
+    return
+  }
+
+  async isTimeSlotAvailable(
+    userId: string,
+    timeSlot: TimeSlot,
+  ): Promise<boolean> {
+    return false
   }
 }
