@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'TsunagiGothic';
-  src: url('/fonts/TsunagiGothic.ttf');
+  src: url('../../public/fonts/TsunagiGothic.ttf') format('truetype');
 }
 
 body,
