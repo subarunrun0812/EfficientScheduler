@@ -9,8 +9,9 @@ import {
   Heading,
   VStack,
   useBreakpointValue,
+  useToast,
 } from '@chakra-ui/react'
-import { useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 export interface CandidateSchedule {
   id: string
@@ -46,6 +47,9 @@ export const CandidateSchedulesTemplate = ({
     { ssr: true },
   )
 
+  const toast = useToast()
+  const router = useRouter()
+
   // URLパラメータ取得
   // const searchParams = useSearchParams()
   // const test = searchParams.get('id')
@@ -53,7 +57,13 @@ export const CandidateSchedulesTemplate = ({
   return (
     <Flex justify='flex-start' direction='column' align='center' h='90vh'>
       <Box my={10}>
-        <Heading as='h1' size='xl' color='gray.700' textAlign='center'>
+        <Heading
+          as='h1'
+          size='xl'
+          color='gray.700'
+          textAlign='center'
+          fontFamily={'TsunagiGothic'}
+        >
           候補日程一覧
         </Heading>
       </Box>
@@ -86,6 +96,14 @@ export const CandidateSchedulesTemplate = ({
           onClick={() => {
             // TODO : 仮押さえ実行処理
             alert(selectedValues)
+            toast({
+              title: '仮押さえしました',
+              status: 'success',
+              duration: 2000,
+              isClosable: true,
+              position: 'bottom-left',
+            })
+            router.push('/home')
           }}
           isDisabled={selectedValues.length === 0}
         >

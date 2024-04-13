@@ -5,7 +5,7 @@ import { LoginTemplate } from '@/components/top/LoginTemplate'
 import { VStack } from '@chakra-ui/react'
 
 export const metadata: Metadata = {
-  title: 'Home',
+  title: 'かりスケ',
 }
 
 export default function HomePage() {

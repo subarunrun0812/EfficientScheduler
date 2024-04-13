@@ -17,6 +17,7 @@ import {
   NumberDecrementStepper,
   useBreakpointValue,
   Text,
+  useToast,
 } from '@chakra-ui/react'
 import { PlaceModal } from './PlaceModal'
 import { PlaceInfo } from './PlaceInfo'
@@ -75,6 +76,7 @@ export const FormTemplatePresenter = ({
     { ssr: true },
   )
   const router = useRouter()
+  const toast = useToast()
   const handleRouter = () => {
     router.push(`/candidate`)
   }
@@ -90,7 +92,7 @@ export const FormTemplatePresenter = ({
     <Box minHeight='100vh' mt={10}>
       <Flex direction='column' align='center' justify='center' mt={10}>
         <Box mb={4}>
-          <Heading as='h1' size='xl' color='gray.700'>
+          <Heading as='h1' size='xl' color='gray.700' fontFamily={'TsunagiGothic'}>
             予定作成フォーム
           </Heading>
         </Box>
@@ -222,6 +224,13 @@ export const FormTemplatePresenter = ({
                     requiredTime,
                 )
                 handleRouter()
+                toast({
+                  title: '予定を作成しました',
+                  status: 'success',
+                  duration: 2000,
+                  isClosable: true,
+                  position: 'bottom-left',
+                })
               }}
             >
               作成

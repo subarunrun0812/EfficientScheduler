@@ -12,8 +12,8 @@ export const TopTemplate = () => {
           justifyContent="center"
         >
           <VStack spacing={8}>
-            <Heading size='2xl'>Calendar app</Heading>
-            <Text fontSize='24px' textAlign='center'>This application allows you to manage your schedule effectively.</Text>
+            <Heading as="h1" size='4xl' fontFamily={"TsunagiGothic"}>かりスケ</Heading>
+            <Text fontSize="xl" textAlign='center' fontFamily={"TsunagiGothic"}>面接などの予定を自動で仮押さえ！</Text>
             <LoginTemplate />
           </VStack>
         </Box>
@@ -21,8 +21,7 @@ export const TopTemplate = () => {
       <Box display={{ base: 'none', md: 'block' }} alignItems="center" marginTop='-3%'>
         <Image
           src="/icon1.webp"
-          height="auto"
-          maxHeight="80%"
+          height="90vh"
           width="90%"
           objectFit="contain"
           alt=""

@@ -34,6 +34,7 @@ export const CreateScheduleButton = ({
         height={height}
         onClick={handleButtonClick}
         fontSize={{ base: 'lg', md: 'xl' , lg: '2xl'}}
+        fontFamily={"TsunagiGothic"}
       >
         予定候補日の作成
       </Button>
