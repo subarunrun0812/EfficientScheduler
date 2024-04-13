@@ -7,6 +7,7 @@ import {
   Heading,
   Flex,
   useBreakpointValue,
+  useToast,
 } from '@chakra-ui/react'
 import { Schedule } from '../type/type'
 import { CandidateSchedule } from '../candidate/CandidateSchedulesTemplate'
@@ -70,6 +71,8 @@ export const ScheduleDetailTemplate = ({
     router.push('/home')
   }
 
+  const toast = useToast()
+
   return (
     <Box mt={10} mb={4}>
       <Flex
@@ -80,7 +83,12 @@ export const ScheduleDetailTemplate = ({
         color='gray.700'
         mt={10}
       >
-        <Heading as='h1' size='xl' color='gray.700' fontFamily={"TsunagiGothic"}>
+        <Heading
+          as='h1'
+          size='xl'
+          color='gray.700'
+          fontFamily={'TsunagiGothic'}
+        >
           予定調整確定ページ
         </Heading>
         <VStack mt={10} spacing={8} w={breakpoint ? '100%' : '40%'} p={2}>
@@ -88,18 +96,18 @@ export const ScheduleDetailTemplate = ({
           <ScheduleItem label='説明' value={schedule.description} />
           <ScheduleItem label='作成日時' value={formatDate(schedule.date)} />
           <VStack maxH='60vh' overflow='auto' w='100%'>
-          {candidateSchedules.map((schedule) => (
-            <SelectSchedule
-              key={schedule.id}
-              id={schedule.id}
-              title={schedule.title}
-              date={schedule.date}
-              startTime={schedule.startTime}
-              endTime={schedule.endTime}
-              handleCheckboxChange={handleCheckboxChange}
-              selectedRadioValue={selectedRadioValue}
-            />
-          ))}
+            {candidateSchedules.map((schedule) => (
+              <SelectSchedule
+                key={schedule.id}
+                id={schedule.id}
+                title={schedule.title}
+                date={schedule.date}
+                startTime={schedule.startTime}
+                endTime={schedule.endTime}
+                handleCheckboxChange={handleCheckboxChange}
+                selectedRadioValue={selectedRadioValue}
+              />
+            ))}
           </VStack>
         </VStack>
         <Box w={breakpoint ? '100%' : '40%'} p={2}>
@@ -109,7 +117,16 @@ export const ScheduleDetailTemplate = ({
             variant='outline' // ボタンのスタイル。枠線のみ
             size='lg' // ボタンのサイズ
             w='100%' // 幅をいっぱいに
-            onClick={handleButtonClick}
+            onClick={() => {
+              handleButtonClick()
+              toast({
+                title: '予定を確定しました',
+                status: 'success',
+                duration: 2000,
+                isClosable: true,
+                position: 'bottom-left',
+              })
+            }}
             isDisabled={selectedValues.length !== 1}
           >
             決定
@@ -125,6 +142,13 @@ export const ScheduleDetailTemplate = ({
               if (confirm('この仮予定を削除しますか？')) {
                 // TODO:削除処理
                 router.push('/home')
+                toast({
+                  title: '削除しました',
+                  status: 'success',
+                  duration: 2000,
+                  isClosable: true,
+                  position: 'bottom-left',
+                })
               }
             }}
           >
