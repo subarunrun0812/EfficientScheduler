@@ -6,8 +6,9 @@ export type EventStatus = 'confirmed' | 'tentative'
 
 export class Event {
   constructor(
+    private readonly userId: string,
     readonly title: string,
-    readonly location: string, // Location型(url)をstring型に変更
+    readonly location: Location,
     private timeSlots: TimeSlot[],
     private status: EventStatus,
     readonly id: string = uuidv4(),
