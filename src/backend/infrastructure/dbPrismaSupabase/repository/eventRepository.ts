@@ -11,8 +11,12 @@ export class EventRepository implements IEventRepository {
 
   // Prisma の型定義が変なので, 頑張って変換してる
   // refs: https://github.com/prisma/prisma/issues/8446
-  private convertEventStatus(status: DBEventStatus): EventStatus {
+  private convertEventStatusForModel(status: DBEventStatus): EventStatus {
     return status.toLowerCase() as EventStatus
+  }
+
+  private convertEventStatusForDB(status: EventStatus): DBEventStatus {
+    return status.toUpperCase() as DBEventStatus
   }
 
   async find(id: string): Promise<Event | undefined> {
@@ -34,12 +38,44 @@ export class EventRepository implements IEventRepository {
       eventResponse.title,
       new Location(eventResponse.locationName),
       timeSlots,
-      this.convertEventStatus(eventResponse.status),
+      this.convertEventStatusForModel(eventResponse.status),
       eventResponse.id,
     )
   }
 
-  async save(event: Event): Promise<void> {}
+  async save(event: Event): Promise<void> {
+    const timeSlots = event.getTimeSlots().map((ts) => {
+      return {
+        id: ts.id,
+        startTime: ts.startDateTime.toDate(),
+        endTime: ts.endDateTime.toDate(),
+      }
+    })
+
+    await this.prisma.event.upsert({
+      where: { id: event.id },
+      update: {
+        userId: event.userId,
+        title: event.title,
+        locationName: event.location.name,
+        status: this.convertEventStatusForDB(event.getStatus()),
+        TimeSlot: {
+          deleteMany: {},
+          create: timeSlots,
+        },
+      },
+      create: {
+        id: event.id,
+        userId: event.userId,
+        title: event.title,
+        locationName: event.location.name,
+        status: this.convertEventStatusForDB(event.getStatus()),
+        TimeSlot: {
+          create: timeSlots,
+        },
+      },
+    })
+  }
 
   async delete(event: Event): Promise<void> {}
 

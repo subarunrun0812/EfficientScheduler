@@ -6,7 +6,7 @@ export type EventStatus = 'confirmed' | 'tentative'
 
 export class Event {
   constructor(
-    private readonly userId: string,
+    readonly userId: string,
     readonly title: string,
     readonly location: Location,
     private timeSlots: TimeSlot[],
@@ -16,6 +16,10 @@ export class Event {
     if (status === 'confirmed' && timeSlots.length !== 1) {
       throw new Error('confirmed event must have exactly one time slot')
     }
+  }
+
+  getStatus(): EventStatus {
+    return this.status
   }
 
   isTentative(): boolean {
