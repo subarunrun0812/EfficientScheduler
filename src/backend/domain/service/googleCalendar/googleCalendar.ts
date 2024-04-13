@@ -15,4 +15,5 @@ export interface IGoogleCalendarService {
     endDate: Dayjs,
   ): Promise<TimeSlot[]>
   createEvent(userId: string, event: Event): Promise<void>
+  isTimeSlotAvailable(userId: string, timeSlot: TimeSlot): Promise<boolean>
 }

@@ -33,4 +33,19 @@ export class Event {
   findTimeSlot(timeSlotId: string): TimeSlot | undefined {
     return this.timeSlots.find((ts) => ts.id === timeSlotId)
   }
+
+  // 指定したタイムスロットに確定する
+  confirmTimeSlot(timeSlotId: string): void {
+    if (this.status === 'confirmed') {
+      throw new Error('event is already confirmed')
+    }
+
+    const timeSlot = this.findTimeSlot(timeSlotId)
+    if (!timeSlot) {
+      throw new Error('time slot not found')
+    }
+
+    this.timeSlots = [timeSlot]
+    this.status = 'confirmed'
+  }
 }
