@@ -37,11 +37,7 @@ export class CreateTimeSlotCandidatesInteractor
     }
 
     const googleCalendarBusySlots = await this.googleCalendarService
-      .getBusySlots(
-        userId,
-        suggestionPeriod.startTime,
-        suggestionPeriod.endTime,
-      )
+      .getBusySlots(suggestionPeriod.startTime, suggestionPeriod.endTime)
       .catch((_) => undefined)
     if (!googleCalendarBusySlots) {
       return []

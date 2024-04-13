@@ -27,7 +27,6 @@ export class GetEventsByPeriodInteractor implements IGetEventsByPeriodUseCase {
 
     const googleCalendarEvents =
       await this.googleCalendarService.getEventsByPeriod(
-        userId,
         startDateTime,
         endDateTime,
       )

@@ -35,7 +35,7 @@ export class SelectEventTimeSlotInteractor
 
     // google calendar の予定と衝突していないか確認
     const isTimeSlotAvailable = await this.googleCalendarService
-      .isTimeSlotAvailable(userId, timeSlot)
+      .isTimeSlotAvailable(timeSlot)
       .catch((_) => false)
     if (!isTimeSlotAvailable) {
       throw new Error('time slot is not available')
