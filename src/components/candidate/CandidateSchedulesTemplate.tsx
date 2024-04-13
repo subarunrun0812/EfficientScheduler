@@ -53,7 +53,7 @@ export const CandidateSchedulesTemplate = ({
   return (
     <Flex justify='flex-start' direction='column' align='center' h='90vh'>
       <Box my={10}>
-        <Heading as='h1' size='xl' color='gray.700' textAlign='center'>
+        <Heading as='h1' size='xl' color='gray.700' textAlign='center' fontFamily={"TsunagiGothic"}>
           候補日程一覧
         </Heading>
       </Box>

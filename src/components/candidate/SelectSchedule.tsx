@@ -53,10 +53,10 @@ export const SelectSchedule = ({
       >
         <VStack align='start' w='100%'>
           <Box>
-            <Heading size='lg'>{title}</Heading>
+            <Heading size='lg' fontFamily={"TsunagiGothic"}>{title}</Heading>
           </Box>
           <Box>
-            <Heading size='md' color='gray.600'>
+            <Heading size='md' color='gray.600' fontFamily={"TsunagiGothic"}>
               {date}&nbsp;{startTime}~{endTime}
             </Heading>
           </Box>

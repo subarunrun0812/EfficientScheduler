@@ -90,7 +90,7 @@ export const FormTemplatePresenter = ({
     <Box minHeight='100vh' mt={10}>
       <Flex direction='column' align='center' justify='center' mt={10}>
         <Box mb={4}>
-          <Heading as='h1' size='xl' color='gray.700'>
+          <Heading as='h1' size='xl' color='gray.700' fontFamily={'TsunagiGothic'}>
             予定作成フォーム
           </Heading>
         </Box>
