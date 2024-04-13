@@ -17,6 +17,7 @@ import {
   NumberDecrementStepper,
   useBreakpointValue,
   Text,
+  useToast,
 } from '@chakra-ui/react'
 import { PlaceModal } from './PlaceModal'
 import { PlaceInfo } from './PlaceInfo'
@@ -75,6 +76,7 @@ export const FormTemplatePresenter = ({
     { ssr: true },
   )
   const router = useRouter()
+  const toast = useToast()
   const handleRouter = () => {
     router.push(`/candidate`)
   }
@@ -222,6 +224,13 @@ export const FormTemplatePresenter = ({
                     requiredTime,
                 )
                 handleRouter()
+                toast({
+                  title: '予定を作成しました',
+                  status: 'success',
+                  duration: 2000,
+                  isClosable: true,
+                  position: 'bottom-left',
+                })
               }}
             >
               作成
