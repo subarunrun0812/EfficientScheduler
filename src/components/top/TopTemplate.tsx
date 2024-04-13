@@ -12,8 +12,8 @@ export const TopTemplate = () => {
           justifyContent="center"
         >
           <VStack spacing={8}>
-            <Heading size='2xl'>Calendar app</Heading>
-            <Text fontSize='24px' textAlign='center'>This application allows you to manage your schedule effectively.</Text>
+            <Heading as="h1" size='4xl' fontFamily={"TsunagiGothic"}>かりスケ</Heading>
+            <Text fontSize="xl" textAlign='center' fontFamily={"TsunagiGothic"}>面接などの予定を自動で仮押さえ！</Text>
             <LoginTemplate />
           </VStack>
         </Box>

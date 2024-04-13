@@ -74,9 +74,10 @@ export const Header = () => {
           href='/'
           textDecoration='none'
           _hover={{ textDecoration: 'none' }}
-          fontSize='2xl'
+          fontSize='3xl'
+          fontFamily={"TsunagiGothic"}
         >
-          Calendar
+          かりスケ
         </Link>
       </Box>
       <Spacer />
