@@ -77,10 +77,33 @@ export class EventRepository implements IEventRepository {
     })
   }
 
-  async delete(event: Event): Promise<void> {}
+  async delete(event: Event): Promise<void> {
+    await this.prisma.event.delete({
+      where: { id: event.id },
+    })
+  }
 
   async findByUserId(userId: string): Promise<Event[]> {
-    return []
+    const eventResponses = await this.prisma.event.findMany({
+      where: { userId: userId },
+      include: {
+        TimeSlot: true,
+      },
+    })
+
+    return eventResponses.map((eventResponse) => {
+      const timeSlots = eventResponse.TimeSlot.map(
+        (ts) => new TimeSlot(dayjs(ts.startTime), dayjs(ts.endTime), ts.id),
+      )
+      return new Event(
+        eventResponse.userId,
+        eventResponse.title,
+        new Location(eventResponse.locationName),
+        timeSlots,
+        this.convertEventStatusForModel(eventResponse.status),
+        eventResponse.id,
+      )
+    })
   }
 
   // 期間外のタイムスロットを除いたイベントの配列
@@ -89,6 +112,46 @@ export class EventRepository implements IEventRepository {
     startDate: Dayjs,
     endDate: Dayjs,
   ): Promise<Event[]> {
-    return []
+    const eventResponses = await this.prisma.event.findMany({
+      where: {
+        userId: userId,
+        TimeSlot: {
+          some: {
+            startTime: {
+              gte: startDate.toDate(),
+            },
+            endTime: {
+              lte: endDate.toDate(),
+            },
+          },
+        },
+      },
+      include: {
+        TimeSlot: {
+          where: {
+            startTime: {
+              gte: startDate.toDate(),
+            },
+            endTime: {
+              lte: endDate.toDate(),
+            },
+          },
+        },
+      },
+    })
+
+    return eventResponses.map((eventResponse) => {
+      const timeSlots = eventResponse.TimeSlot.map(
+        (ts) => new TimeSlot(dayjs(ts.startTime), dayjs(ts.endTime), ts.id),
+      )
+      return new Event(
+        eventResponse.userId,
+        eventResponse.title,
+        new Location(eventResponse.locationName),
+        timeSlots,
+        this.convertEventStatusForModel(eventResponse.status),
+        eventResponse.id,
+      )
+    })
   }
 }
