@@ -1,15 +1,17 @@
 'use server'
 
-import { FormState } from '@/components/form/FormTemplate'
 import { createClient } from '@/utils/supabase/server'
 import { CreateTimeSlotCandidatesInput } from '@/backend/application/createTimeSlotCandidates/types'
-import dayjs from 'dayjs'
 import { CreateTimeSlotCandidatesInteractor } from '@/backend/application/createTimeSlotCandidates/interactor'
 import { EventRepository } from '@/backend/infrastructure/dbPrismaSupabase/repository/eventRepository'
 import { GoogleCalendarServiceFactory } from '@/backend/infrastructure/apiGoogleCalendar/factory'
 import { SuggestTimeSlotsService } from '@/backend/domain/service/suggestTimeSlots/suggestTimeSlots'
+import { EventDataQueryParams } from '@/components/form/FormTemplate'
+import dayjs from 'dayjs'
 
-export const createTimeSlotCandidates = async (state: FormState) => {
+export const createTimeSlotCandidates = async (
+  eventData: EventDataQueryParams,
+) => {
   const supabase = createClient()
   const {
     data: { user },
@@ -20,12 +22,15 @@ export const createTimeSlotCandidates = async (state: FormState) => {
 
   const input: CreateTimeSlotCandidatesInput = {
     userId: user.id,
-    startDateTime: dayjs(),
-    endDateTime: dayjs(),
-    duration: dayjs.duration(1),
-    bufferDuration: dayjs.duration(1),
-    suggestionPeriod: { startTime: dayjs(), endTime: dayjs() },
-    maxSuggestions: 10,
+    startDateTime: dayjs(eventData.startDateTime, 'HH:mm'),
+    endDateTime: dayjs(eventData.endDateTime, 'HH:mm'),
+    duration: dayjs.duration(parseInt(eventData.duration), 'minutes'),
+    bufferDuration: dayjs.duration(0),
+    suggestionPeriod: {
+      startTime: dayjs(),
+      endTime: dayjs().add(1, 'month'),
+    },
+    maxSuggestions: 8,
   }
   const interactor = new CreateTimeSlotCandidatesInteractor(
     new EventRepository(),

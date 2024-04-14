@@ -1,20 +1,17 @@
 import { Box, Checkbox, Heading, VStack } from '@chakra-ui/react'
 import { ChangeEvent, useState } from 'react'
+import { Dayjs } from 'dayjs'
 
 interface SelectScheduleProps {
   id: string
-  title: string
-  date: string
-  startTime: string
-  endTime: string
+  startTime: Dayjs
+  endTime: Dayjs
   handleCheckboxChange: (event: ChangeEvent<HTMLInputElement>) => void
   selectedRadioValue?: string
 }
 
 export const SelectSchedule = ({
   id,
-  title,
-  date,
   startTime,
   endTime,
   handleCheckboxChange,
@@ -23,6 +20,17 @@ export const SelectSchedule = ({
   const [isCheck, setIsCheck] = useState(false)
   const isChecked =
     selectedRadioValue !== undefined ? selectedRadioValue === id : isCheck
+
+  function formatDateTimeRange(start: Dayjs, end: Dayjs): string {
+    const year = start.year()
+    const month = start.month() + 1
+    const day = start.date()
+    const startTime = start.format('HH:mm')
+    const endTime = end.format('HH:mm')
+
+    return `${year}年${month}月${day}日 ${startTime}~${endTime}`
+  }
+
   return (
     <Box
       padding={4}
@@ -37,7 +45,7 @@ export const SelectSchedule = ({
         size='lg'
         variant='outline'
         borderColor='gray.300'
-        onChange={(e) => {
+        onChange={e => {
           handleCheckboxChange(e)
           if (selectedRadioValue !== undefined) {
             setIsCheck(selectedRadioValue === id)
@@ -53,11 +61,8 @@ export const SelectSchedule = ({
       >
         <VStack align='start' w='100%' ml={4}>
           <Box>
-            <Heading size='lg' fontFamily={"TsunagiGothic"}>{title}</Heading>
-          </Box>
-          <Box>
-            <Heading size='md' color='gray.600' fontFamily={"TsunagiGothic"}>
-              {date}&nbsp;{startTime}~{endTime}
+            <Heading size='md' color='gray.600' fontFamily={'TsunagiGothic'}>
+              {formatDateTimeRange(startTime, endTime)}
             </Heading>
           </Box>
         </VStack>

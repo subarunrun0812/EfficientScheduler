@@ -31,7 +31,7 @@ interface FormTemplatePresenterProps extends FormState {
   isOpen: boolean
   onOpen: () => void
   onClose: () => void
-  onSubmit: () => Promise<void>
+  onSubmit: () => void
 }
 
 export const FormTemplatePresenter = ({

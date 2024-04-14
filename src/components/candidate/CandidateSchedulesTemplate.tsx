@@ -1,6 +1,6 @@
 'use client'
 
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 import { SelectSchedule } from './SelectSchedule'
 import {
   Box,
@@ -11,29 +11,52 @@ import {
   useToast,
   VStack,
 } from '@chakra-ui/react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { registerEvent } from '@/components/candidate/actions/registerEvent'
+import { EventDataQueryParams } from '@/components/form/FormTemplate'
+import qs from 'qs'
+import dayjs, { Dayjs } from 'dayjs'
+import { createTimeSlotCandidates } from '@/components/candidate/actions/createTimeSlotCandidates'
+import { TimeSlot } from '@/backend/domain/model/event/timeSlot'
+import duration from 'dayjs/plugin/duration'
+
+dayjs.extend(duration)
 
 export interface CandidateSchedule {
   id: string
-  title: string
-  date: string
-  startTime: string
-  endTime: string
+  startTime: Dayjs
+  endTime: Dayjs
 }
 
-interface CandidateListProps {
-  candidateSchedules: CandidateSchedule[]
-}
-
-export const CandidateSchedulesTemplate = ({
-  candidateSchedules,
-}: CandidateListProps) => {
+export const CandidateSchedulesTemplate = () => {
   const [selectedScheduleIds, setSelectedScheduleIds] = useState<string[]>([])
+  const [candidates, setCandidates] = useState<CandidateSchedule[]>([])
+  const [timeSlots, setTimeSlots] = useState<TimeSlot[]>([])
   const isSmallScreen = useBreakpointValue(
     { base: true, md: false },
     { ssr: true },
   )
+
+  const searchParams = useSearchParams().toString()
+  const eventData: EventDataQueryParams = qs.parse(
+    searchParams,
+  ) as EventDataQueryParams
+
+  useEffect(() => {
+    createTimeSlotCandidates(eventData).then(tss => {
+      setTimeSlots(tss)
+      setCandidates(
+        tss.map(item => {
+          return {
+            id: item.id,
+            startTime: item.startDateTime,
+            endTime: item.endDateTime,
+          }
+        }),
+      )
+    })
+  }, [])
+
   const toast = useToast()
   const router = useRouter()
 
@@ -51,13 +74,12 @@ export const CandidateSchedulesTemplate = ({
   }
 
   const handleTemporaryReservation = async () => {
-    await registerEvent({
-      id: '1',
-      title: '仮押さえ',
-      date: '2022-01-01',
-      startTime: '09:00',
-      endTime: '10:00',
-    })
+    await registerEvent(
+      eventData.title,
+      timeSlots.filter(ts => selectedScheduleIds.includes(ts.id)),
+      eventData.locationName,
+    )
+
     toast({
       title: '仮押さえしました',
       status: 'success',
@@ -89,7 +111,7 @@ export const CandidateSchedulesTemplate = ({
         h='60vh'
         overflow='auto'
       >
-        {candidateSchedules.map(schedule => (
+        {candidates.map(schedule => (
           <SelectSchedule
             key={schedule.id}
             {...schedule}

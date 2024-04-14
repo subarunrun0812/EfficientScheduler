@@ -2,10 +2,11 @@
 
 import { useDisclosure, useToast } from '@chakra-ui/react'
 import { useEffect, useReducer } from 'react'
-
 import { FormTemplatePresenter } from './FormTemplatePresenter'
 import { useRouter } from 'next/navigation'
-import { createTimeSlotCandidates } from '@/components/form/actions/createTimeSlotCandidates'
+import dayjs, { Dayjs } from 'dayjs'
+import { Duration } from 'dayjs/plugin/duration'
+import qs from 'qs'
 
 interface FormTemplateProps {}
 
@@ -19,6 +20,14 @@ export interface FormState {
   endPlace: string
   transportation: string
   requiredTime: string
+}
+
+export type EventDataQueryParams = {
+  title: string
+  locationName?: string
+  startDateTime: string
+  endDateTime: string
+  duration: string
 }
 
 type FormAction =
@@ -107,9 +116,17 @@ export const FormTemplate = ({}: FormTemplateProps) => {
   const router = useRouter()
   const toast = useToast()
 
-  const handleSubmit = async () => {
-    const candidates = await createTimeSlotCandidates(state)
-    router.push(`/candidate`)
+  const handleSubmit = () => {
+    const params: EventDataQueryParams = {
+      title: state.title,
+      locationName: state.endPlace == '' ? undefined : state.endPlace,
+      startDateTime: state.startTime,
+      endDateTime: state.endTime,
+      duration: state.duration,
+    }
+    const queryParams = qs.stringify(params)
+
+    router.push(`/candidate?${queryParams}`)
     toast({
       title: '予定を作成しました',
       status: 'success',

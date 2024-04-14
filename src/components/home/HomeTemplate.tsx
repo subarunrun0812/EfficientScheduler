@@ -18,7 +18,6 @@ export const HomeTemplate = () => {
 
   useEffect(() => {
     getTentativeEvents().then(schedules => {
-      console.log(schedules)
       setTentativeEvents(schedules)
     })
   }, [])
