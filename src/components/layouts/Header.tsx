@@ -92,7 +92,7 @@ export const Header = () => {
     <Flex justifyContent='space-between' p={4} bg='cyan.100'>
       <Box>
         <Link
-          href='/'
+          href='/home'
           textDecoration='none'
           _hover={{ textDecoration: 'none' }}
           fontSize='2xl'
