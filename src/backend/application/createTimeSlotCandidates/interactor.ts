@@ -31,20 +31,20 @@ export class CreateTimeSlotCandidatesInteractor
 
     const userEvents = await this.eventRepository
       .findByUserId(userId)
-      .catch((_) => undefined)
+      .catch(_ => undefined)
     if (!userEvents) {
       throw new Error('Failed to get user events')
     }
 
     const googleCalendarBusySlots = await this.googleCalendarService
       .getBusySlots(suggestionPeriod.startTime, suggestionPeriod.endTime)
-      .catch((_) => undefined)
+      .catch(_ => undefined)
     if (!googleCalendarBusySlots) {
-      return []
+      throw new Error('Failed to get google calendar busy slots')
     }
 
     return this.suggestionService.suggestTimeSlots(
-      userEvents.flatMap((e) => e.getTimeSlots()),
+      userEvents.flatMap(e => e.getTimeSlots()),
       googleCalendarBusySlots,
       { startTime: startDateTime, endTime: endDateTime },
       duration,
