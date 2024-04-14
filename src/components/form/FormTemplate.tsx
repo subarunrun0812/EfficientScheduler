@@ -5,6 +5,7 @@ import { useEffect, useReducer } from 'react'
 
 import { FormTemplatePresenter } from './FormTemplatePresenter'
 import { useRouter } from 'next/navigation'
+import { createTimeSlotCandidates } from '@/components/form/actions/createTimeSlotCandidates'
 
 interface FormTemplateProps {}
 
@@ -110,19 +111,7 @@ export const FormTemplate = ({}: FormTemplateProps) => {
   }
 
   const handleSubmit = async () => {
-    // TODO : submitした時の処理
-    await new Promise((resolve) => setTimeout(resolve, 1000))
-    alert(
-      [
-        state.title,
-        state.startTime,
-        state.endTime,
-        state.startPlace,
-        state.endPlace,
-        state.transportation,
-        state.requiredTime,
-      ].join(' '),
-    )
+    const candidates = await createTimeSlotCandidates(state)
     handleRouter()
     toast({
       title: '予定を作成しました',
