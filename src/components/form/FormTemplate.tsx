@@ -106,13 +106,10 @@ export const FormTemplate = ({}: FormTemplateProps) => {
 
   const router = useRouter()
   const toast = useToast()
-  const handleRouter = () => {
-    router.push(`/candidate`)
-  }
 
   const handleSubmit = async () => {
     const candidates = await createTimeSlotCandidates(state)
-    handleRouter()
+    router.push(`/candidate`)
     toast({
       title: '予定を作成しました',
       status: 'success',
