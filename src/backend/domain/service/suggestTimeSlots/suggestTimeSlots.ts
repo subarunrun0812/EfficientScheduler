@@ -23,37 +23,35 @@ export class SuggestTimeSlotsService {
     maxSuggestions: number,
   ): TimeSlot[] {
     const busySlots = [...tentativeSlots, ...googleCalendarBusySlots];
-    const availableSlots: TimeSlot[] = [];
+    const suggestions: TimeSlot[] = [];
     let currentDate = suggestionPeriod.startTime;
 
     // suggestionPeriod内で、maxSuggestions個の候補を見つける
     while (
       currentDate.isBefore(suggestionPeriod.endTime) &&
-      availableSlots.length < maxSuggestions
+      suggestions.length < maxSuggestions
     ) {
       let currentStartTime = currentDate
+        .clone()
         .set("hour", availabilityRange.startTime.hour())
         .set("minute", availabilityRange.startTime.minute());
+      const rangeEnd = currentStartTime
+        .clone()
+        .set("hour", availabilityRange.endTime.hour())
+        .set("minute", availabilityRange.endTime.minute());
 
       // availabilityRange内で、durationを超えない候補を見つける
       while (
-        currentStartTime
-          .add(duration)
-          .add(bufferDuration)
-          .isBefore(
-            currentDate
-              .set("hour", availabilityRange.endTime.hour())
-              .set("minute", availabilityRange.endTime.minute()),
-          )
+        currentStartTime.add(duration).add(bufferDuration).isBefore(rangeEnd)
       ) {
-        const endTime = currentStartTime.add(duration);
+        const endTime = currentStartTime.clone().add(duration);
         const slot: TimeSlot = new TimeSlot(currentStartTime, endTime);
 
         if (!isOverlapping(slot, busySlots)) {
-          if (availableSlots.length === maxSuggestions) {
+          if (suggestions.length === maxSuggestions) {
             break;
           }
-          availableSlots.push(slot);
+          suggestions.push(slot);
         }
 
         currentStartTime = endTime.add(duration);
@@ -62,7 +60,7 @@ export class SuggestTimeSlotsService {
       currentDate = currentDate.add(1, "day");
     }
 
-    return availableSlots;
+    return suggestions;
   }
 }
 
