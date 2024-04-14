@@ -6,9 +6,8 @@ import { Box, Flex, useBreakpointValue, VStack } from '@chakra-ui/react'
 import { ScheduleList } from './ScheduleList'
 import { Schedule } from '../type/type'
 import { CreateScheduleButton } from './CreateScheduleButton'
-import { createClient } from '@/utils/supabase/client'
 import { useEffect, useState } from 'react'
-import { Event } from '@/backend/domain/model/event/event'
+import { getTentativeEvents } from '@/components/home/actions/getTentativeEvents'
 
 export const HomeTemplate = () => {
   const [tentativeEvents, setTentativeEvents] = useState<Schedule[]>([])
@@ -17,30 +16,10 @@ export const HomeTemplate = () => {
     { ssr: true },
   )
 
-  const fetchTentativeEvents = async () => {
-    const supabase = createClient()
-    const { data, error } = await supabase.auth.getUser()
-    if (error) {
-			throw new Error('Failed to fetch user')
-    }
-
-    const userId = data.user.id
-    const response = await fetch(`/api/tentativeEvents?user_id=${userId}`)
-    const json = await response.json()
-    console.log(json)
-    return json as Event[] // TODO: validation
-  }
-
   useEffect(() => {
-    fetchTentativeEvents().then(events => {
-      setTentativeEvents(events.map((e): Schedule => {
-				return {
-					id: e.id,
-					title: e.title,
-					date: 0, // TODO
-					description: "hoge" // TODO
-				}
-			}))
+    getTentativeEvents().then(schedules => {
+      console.log(schedules)
+      setTentativeEvents(schedules)
     })
   }, [])
 
