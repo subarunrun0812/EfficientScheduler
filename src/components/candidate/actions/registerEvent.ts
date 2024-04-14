@@ -6,10 +6,17 @@ import { RegisterTentativeEventInteractor } from '@/backend/application/register
 import { EventRepository } from '@/backend/infrastructure/dbPrismaSupabase/repository/eventRepository'
 import { Location } from '@/backend/domain/model/event/location'
 import { TimeSlot } from '@/backend/domain/model/event/timeSlot'
+import dayjs from 'dayjs'
+
+export type TimeSlotData = {
+  id: string
+  startDate: string
+  endDate: string
+}
 
 export const registerEvent = async (
   title: string,
-  timeSlots: TimeSlot[],
+  timeSlots: TimeSlotData[],
   location?: string,
 ) => {
   const supabase = createClient()
@@ -24,7 +31,9 @@ export const registerEvent = async (
     userId: user.id,
     title: title,
     location: new Location(location ?? ''),
-    timeSlots: timeSlots,
+    timeSlots: timeSlots.map((ts): TimeSlot => {
+      return new TimeSlot(dayjs(ts.startDate), dayjs(ts.endDate), ts.id)
+    }),
   }
   const interactor = new RegisterTentativeEventInteractor(new EventRepository())
   await interactor.execute(input)

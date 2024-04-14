@@ -1,11 +1,11 @@
 import { Box, Checkbox, Heading, VStack } from '@chakra-ui/react'
 import { ChangeEvent, useState } from 'react'
-import { Dayjs } from 'dayjs'
+import dayjs, { Dayjs } from 'dayjs'
 
 interface SelectScheduleProps {
   id: string
-  startTime: Dayjs
-  endTime: Dayjs
+  startTime: string
+  endTime: string
   handleCheckboxChange: (event: ChangeEvent<HTMLInputElement>) => void
   selectedRadioValue?: string
 }
@@ -62,7 +62,7 @@ export const SelectSchedule = ({
         <VStack align='start' w='100%' ml={4}>
           <Box>
             <Heading size='md' color='gray.600' fontFamily={'TsunagiGothic'}>
-              {formatDateTimeRange(startTime, endTime)}
+              {formatDateTimeRange(dayjs(startTime), dayjs(endTime))}
             </Heading>
           </Box>
         </VStack>

@@ -1,15 +1,15 @@
-import { TimeSlot } from '@/backend/domain/model/event/timeSlot'
-import { Dayjs } from 'dayjs'
-import { Duration } from 'dayjs/plugin/duration'
+import { TimeSlot } from "@/backend/domain/model/event/timeSlot";
+import { Dayjs } from "dayjs";
+import { Duration } from "dayjs/plugin/duration";
 
 interface AvailabilityTimeRange {
-  startTime: Dayjs
-  endTime: Dayjs
+  startTime: Dayjs;
+  endTime: Dayjs;
 }
 
 interface SuggestionPeriod {
-  startTime: Dayjs
-  endTime: Dayjs
+  startTime: Dayjs;
+  endTime: Dayjs;
 }
 
 export class SuggestTimeSlotsService {
@@ -22,11 +22,9 @@ export class SuggestTimeSlotsService {
     suggestionPeriod: SuggestionPeriod,
     maxSuggestions: number,
   ): TimeSlot[] {
-    // TODO: implement here
-
-    const busySlots = [...tentativeSlots, ...googleCalendarBusySlots]
-    const availableSlots: TimeSlot[] = []
-    let currentDate = suggestionPeriod.startTime
+    const busySlots = [...tentativeSlots, ...googleCalendarBusySlots];
+    const availableSlots: TimeSlot[] = [];
+    let currentDate = suggestionPeriod.startTime;
 
     // suggestionPeriod内で、maxSuggestions個の候補を見つける
     while (
@@ -34,8 +32,8 @@ export class SuggestTimeSlotsService {
       availableSlots.length < maxSuggestions
     ) {
       let currentStartTime = currentDate
-        .set('hour', availabilityRange.startTime.hour())
-        .set('minute', availabilityRange.startTime.minute())
+        .set("hour", availabilityRange.startTime.hour())
+        .set("minute", availabilityRange.startTime.minute());
 
       // availabilityRange内で、durationを超えない候補を見つける
       while (
@@ -44,30 +42,30 @@ export class SuggestTimeSlotsService {
           .add(bufferDuration)
           .isBefore(
             currentDate
-              .set('hour', availabilityRange.endTime.hour())
-              .set('minute', availabilityRange.endTime.minute()),
+              .set("hour", availabilityRange.endTime.hour())
+              .set("minute", availabilityRange.endTime.minute()),
           )
       ) {
-        const endTime = currentStartTime.add(duration)
-        const slot: TimeSlot = new TimeSlot(currentStartTime, endTime)
+        const endTime = currentStartTime.add(duration);
+        const slot: TimeSlot = new TimeSlot(currentStartTime, endTime);
 
         if (!isOverlapping(slot, busySlots)) {
-          availableSlots.push(slot)
           if (availableSlots.length === maxSuggestions) {
-            return availableSlots
+            break;
           }
+          availableSlots.push(slot);
         }
 
-        currentStartTime = endTime.add(duration)
+        currentStartTime = endTime.add(duration);
       }
 
-      currentDate = currentDate.add(1, 'day')
+      currentDate = currentDate.add(1, "day");
     }
 
-    return availableSlots
+    return availableSlots;
   }
 }
 
 function isOverlapping(slot: TimeSlot, existingEvents: TimeSlot[]): boolean {
-  return existingEvents.some(event => slot.overlaps(event))
+  return existingEvents.some((event) => slot.overlaps(event));
 }
