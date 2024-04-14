@@ -7,11 +7,12 @@ import {
   Button,
   Flex,
   Heading,
-  VStack,
   useBreakpointValue,
   useToast,
+  VStack,
 } from '@chakra-ui/react'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
+import { registerEvent } from '@/components/candidate/actions/registerEvent'
 
 export interface CandidateSchedule {
   id: string
@@ -28,31 +29,44 @@ interface CandidateListProps {
 export const CandidateSchedulesTemplate = ({
   candidateSchedules,
 }: CandidateListProps) => {
-  // 選択した要素取得する一連の流れ
-  const [selectedValues, setSelectedValues] = useState<string[]>([])
-
-  const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value
-    const isChecked = event.target.checked
-
-    if (isChecked) {
-      setSelectedValues([...selectedValues, value])
-    } else {
-      setSelectedValues(selectedValues.filter((item) => item !== value))
-    }
-  }
-
-  const breakpoint = useBreakpointValue(
-    { base: 'base', md: false },
+  const [selectedScheduleIds, setSelectedScheduleIds] = useState<string[]>([])
+  const isSmallScreen = useBreakpointValue(
+    { base: true, md: false },
     { ssr: true },
   )
-
   const toast = useToast()
   const router = useRouter()
 
-  // URLパラメータ取得
-  // const searchParams = useSearchParams()
-  // const test = searchParams.get('id')
+  const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const scheduleId = event.target.value
+    const isChecked = event.target.checked
+
+    setSelectedScheduleIds(prevSelectedScheduleIds => {
+      if (isChecked) {
+        return [...prevSelectedScheduleIds, scheduleId]
+      } else {
+        return prevSelectedScheduleIds.filter(id => id !== scheduleId)
+      }
+    })
+  }
+
+  const handleTemporaryReservation = async () => {
+    await registerEvent({
+      id: '1',
+      title: '仮押さえ',
+      date: '2022-01-01',
+      startTime: '09:00',
+      endTime: '10:00',
+    })
+    toast({
+      title: '仮押さえしました',
+      status: 'success',
+      duration: 2000,
+      isClosable: true,
+      position: 'bottom-left',
+    })
+    router.push('/home')
+  }
 
   return (
     <Flex justify='flex-start' direction='column' align='center' h='90vh'>
@@ -62,7 +76,7 @@ export const CandidateSchedulesTemplate = ({
           size='xl'
           color='gray.700'
           textAlign='center'
-          fontFamily={'TsunagiGothic'}
+          fontFamily='TsunagiGothic'
         >
           候補日程一覧
         </Heading>
@@ -71,41 +85,26 @@ export const CandidateSchedulesTemplate = ({
         spacing={4}
         padding={4}
         align='start'
-        w={breakpoint ? '100%' : '50%'}
+        w={isSmallScreen ? '100%' : '50%'}
         h='60vh'
         overflow='auto'
       >
-        {candidateSchedules.map((schedule) => (
+        {candidateSchedules.map(schedule => (
           <SelectSchedule
             key={schedule.id}
-            id={schedule.id}
-            title={schedule.title}
-            date={schedule.date}
-            startTime={schedule.startTime}
-            endTime={schedule.endTime}
+            {...schedule}
             handleCheckboxChange={handleCheckboxChange}
           />
         ))}
       </VStack>
-      <Box w={breakpoint ? '100%' : '50%'} mt={10} p={2} alignItems='center'>
+      <Box w={isSmallScreen ? '100%' : '50%'} mt={10} p={2} alignItems='center'>
         <Button
           colorScheme='cyan'
           variant='outline'
           size='lg'
           w='100%'
-          onClick={() => {
-            // TODO : 仮押さえ実行処理
-            alert(selectedValues)
-            toast({
-              title: '仮押さえしました',
-              status: 'success',
-              duration: 2000,
-              isClosable: true,
-              position: 'bottom-left',
-            })
-            router.push('/home')
-          }}
-          isDisabled={selectedValues.length === 0}
+          onClick={handleTemporaryReservation}
+          isDisabled={selectedScheduleIds.length === 0}
         >
           仮押さえする
         </Button>
