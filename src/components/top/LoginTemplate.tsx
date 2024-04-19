@@ -36,7 +36,7 @@ export const LoginTemplate = () => {
           access_type: 'offline',
           prompt: 'consent',
           scope:
-            'openid https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/calendar.events.owned https://www.googleapis.com/auth/calendar.events.freebusy',
+            'openid https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/calendar.events.owned https://www.googleapis.com/auth/calendar.events.freebusy https://www.googleapis.com/auth/calendar.readonly',
         },
       },
     })

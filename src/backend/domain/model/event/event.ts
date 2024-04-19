@@ -5,17 +5,21 @@ import { TimeSlot } from '@/backend/domain/model/event/timeSlot'
 export type EventStatus = 'confirmed' | 'tentative'
 
 export class Event {
-  readonly id: string = uuidv4()
-
   constructor(
+    readonly userId: string,
     readonly title: string,
     readonly location: Location,
     private timeSlots: TimeSlot[],
     private status: EventStatus,
+    readonly id: string = uuidv4(),
   ) {
     if (status === 'confirmed' && timeSlots.length !== 1) {
       throw new Error('confirmed event must have exactly one time slot')
     }
+  }
+
+  getStatus(): EventStatus {
+    return this.status
   }
 
   isTentative(): boolean {
@@ -34,9 +38,10 @@ export class Event {
     return this.timeSlots.find((ts) => ts.id === timeSlotId)
   }
 
-  selectTimeSlot(timeSlotId: string): void {
-    if (this.isConfirmed()) {
-      throw new Error('confirmed event cannot change time slot')
+  // 指定したタイムスロットに確定する
+  confirmTimeSlot(timeSlotId: string): void {
+    if (this.status === 'confirmed') {
+      throw new Error('event is already confirmed')
     }
 
     const timeSlot = this.findTimeSlot(timeSlotId)
@@ -45,5 +50,6 @@ export class Event {
     }
 
     this.timeSlots = [timeSlot]
+    this.status = 'confirmed'
   }
 }

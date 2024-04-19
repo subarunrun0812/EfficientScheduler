@@ -3,23 +3,25 @@ import {
   GetTentativeEventsOutput,
   IGetTentativeEventsUseCase,
 } from '@/backend/application/getTentativeEvents/types'
-import { ICalendarRepository } from '@/backend/domain/model/calendar/calendarRepository'
+import { IEventRepository } from '@/backend/domain/model/event/eventRepository'
 
 export class GetTentativeEventsInteractor
   implements IGetTentativeEventsUseCase
 {
-  constructor(private readonly calendarRepository: ICalendarRepository) {}
+  constructor(private readonly eventRepository: IEventRepository) {}
 
   async execute(
     input: GetTentativeEventsInput,
   ): Promise<GetTentativeEventsOutput> {
     const { userId } = input
 
-    const userCalendar = await this.calendarRepository.findByUserId(userId)
-    if (!userCalendar) {
-      return []
+    const userEvents = await this.eventRepository
+      .findByUserId(userId)
+      .catch((e) => undefined)
+    if (!userEvents) {
+      throw new Error('User not found')
     }
 
-    return userCalendar.getTentativeEvents()
+    return userEvents.filter((event) => event.isTentative())
   }
 }

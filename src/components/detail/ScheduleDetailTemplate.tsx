@@ -93,7 +93,6 @@ export const ScheduleDetailTemplate = ({
         </Heading>
         <VStack mt={10} spacing={8} w={breakpoint ? '100%' : '40%'} p={2}>
           <ScheduleItem label='タイトル' value={schedule.title} />
-          <ScheduleItem label='説明' value={schedule.description} />
           <ScheduleItem label='作成日時' value={formatDate(schedule.date)} />
           <VStack maxH='60vh' overflow='auto' w='100%'>
             {candidateSchedules.map((schedule) => (

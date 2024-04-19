@@ -3,12 +3,12 @@ import {
   GetEventsByPeriodOutput,
   IGetEventsByPeriodUseCase,
 } from '@/backend/application/getEventsByPeriod/types'
-import { ICalendarRepository } from '@/backend/domain/model/calendar/calendarRepository'
 import { IGoogleCalendarService } from '@/backend/domain/service/googleCalendar/googleCalendar'
+import { IEventRepository } from '@/backend/domain/model/event/eventRepository'
 
 export class GetEventsByPeriodInteractor implements IGetEventsByPeriodUseCase {
   constructor(
-    private readonly calendarRepository: ICalendarRepository,
+    private readonly eventRepository: IEventRepository,
     private readonly googleCalendarService: IGoogleCalendarService,
   ) {}
 
@@ -17,26 +17,26 @@ export class GetEventsByPeriodInteractor implements IGetEventsByPeriodUseCase {
   ): Promise<GetEventsByPeriodOutput> {
     const { userId, startDateTime, endDateTime } = input
 
-    const userCalendar = await this.calendarRepository.findByUserId(userId)
-    if (!userCalendar) {
-      return { tentativeEvents: [], googleCalendarEvents: [] }
+    const userEvents = await this.eventRepository
+      .findByUserIdAndPeriod(userId, startDateTime, endDateTime)
+      .catch((e) => undefined)
+    if (!userEvents) {
+      throw new Error('Failed to get user events')
     }
-
-    const tentativeEvents = userCalendar.getTentativeEventsByPeriod(
-      startDateTime,
-      endDateTime,
-    )
+    const tentativeUserEvents = userEvents.filter((e) => e.isTentative())
 
     const googleCalendarEvents =
       await this.googleCalendarService.getEventsByPeriod(
-        userId,
         startDateTime,
         endDateTime,
       )
     if (!googleCalendarEvents) {
-      return { tentativeEvents, googleCalendarEvents: [] }
+      throw new Error('Failed to get google calendar events')
     }
 
-    return { tentativeEvents, googleCalendarEvents }
+    return {
+      tentativeEvents: tentativeUserEvents,
+      googleCalendarEvents,
+    }
   }
 }

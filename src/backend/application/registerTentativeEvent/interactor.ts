@@ -3,30 +3,22 @@ import {
   RegisterTentativeEventInput,
   RegisterTentativeEventOutput,
 } from '@/backend/application/registerTentativeEvent/types'
-import { ICalendarRepository } from '@/backend/domain/model/calendar/calendarRepository'
 import { Event } from '@/backend/domain/model/event/event'
+import { IEventRepository } from '@/backend/domain/model/event/eventRepository'
 
 export class RegisterTentativeEventInteractor
   implements IRegisterTentativeEventUseCase
 {
-  constructor(private readonly calendarRepository: ICalendarRepository) {}
+  constructor(private readonly eventRepository: IEventRepository) {}
 
   async execute(
     input: RegisterTentativeEventInput,
   ): Promise<RegisterTentativeEventOutput> {
     const { userId, title, location, timeSlots } = input
 
-    const userCalendar = await this.calendarRepository.findByUserId(userId)
-    if (!userCalendar) {
-      throw new Error('user not found')
-    }
+    const event = new Event(userId, title, location, timeSlots, 'tentative')
+    await this.eventRepository.save(event)
 
-    const tentativeEvent = new Event(title, location, timeSlots, 'tentative')
-
-    userCalendar.addEvent(tentativeEvent)
-
-    await this.calendarRepository.save(userCalendar)
-
-    return tentativeEvent
+    return event
   }
 }

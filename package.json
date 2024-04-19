@@ -21,6 +21,8 @@
     "@fullcalendar/core": "^6.1.11",
     "@fullcalendar/daygrid": "^6.1.11",
     "@fullcalendar/react": "^6.1.11",
+    "@googleapis/calendar": "^9.7.0",
+    "@prisma/client": "^5.12.1",
     "@supabase/ssr": "^0.3.0",
     "@supabase/supabase-js": "^2.42.0",
     "@yamada-ui/calendar": "^1.2.6",
@@ -29,14 +31,18 @@
     "@yamada-ui/table": "^1.0.23",
     "dayjs": "^1.11.10",
     "framer-motion": "^11.0.25",
+    "googleapis": "^134.0.0",
     "next": "14.1.4",
+    "qs": "^6.12.1",
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.51.2",
+    "ts-node": "^10.9.2",
     "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@types/node": "^20",
+    "@types/qs": "^6.9.14",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@types/uuid": "^9.0.8",
@@ -44,6 +50,7 @@
     "eslint-config-next": "14.1.4",
     "eslint-config-prettier": "^9.1.0",
     "prettier": "^3.2.5",
+    "prisma": "^5.12.1",
     "supabase": "^1.153.4",
     "typescript": "^5"
   }

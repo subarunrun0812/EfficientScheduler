@@ -39,11 +39,7 @@ export const ScheduleList = ({ width, schedules }: ScheduleListProps) => {
         onClick={() => handleButtonClick({ id: schedule.id })}
         borderRadius='10px'
       >
-        <Text fontSize='2xl'>{schedule.description}</Text>
-        <Text>
-          仮候補日程を作成した日 <br />
-          {schedule.date}
-        </Text>
+        <Text fontSize='2xl'>{schedule.title}</Text>
       </Box>
     )
   }

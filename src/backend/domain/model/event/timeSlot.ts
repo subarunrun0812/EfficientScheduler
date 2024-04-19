@@ -9,11 +9,10 @@ dayjs.extend(isSameOrAfter)
 dayjs.extend(isSameOrBefore)
 
 export class TimeSlot {
-  readonly id: string = uuidv4()
-
   constructor(
     readonly startDateTime: Dayjs,
     readonly endDateTime: Dayjs,
+    readonly id: string = uuidv4(),
   ) {
     if (startDateTime.isAfter(endDateTime)) {
       throw new Error('startDateTime must be before endDateTime')

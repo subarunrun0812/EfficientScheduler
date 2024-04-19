@@ -1,68 +1,107 @@
-'use client'
+"use client";
 
-import { ChangeEvent, useState } from 'react'
-import { SelectSchedule } from './SelectSchedule'
+import { ChangeEvent, useEffect, useState } from "react";
+import { SelectSchedule } from "./SelectSchedule";
 import {
   Box,
   Button,
   Flex,
   Heading,
-  VStack,
   useBreakpointValue,
   useToast,
-} from '@chakra-ui/react'
-import { useRouter, useSearchParams } from 'next/navigation'
+  VStack,
+} from "@chakra-ui/react";
+import { useRouter, useSearchParams } from "next/navigation";
+import {
+  TimeSlotData,
+  registerEvent,
+} from "@/components/candidate/actions/registerEvent";
+import { EventDataQueryParams } from "@/components/form/FormTemplate";
+import qs from "qs";
+import dayjs, { Dayjs } from "dayjs";
+import { createTimeSlotCandidates } from "@/components/candidate/actions/createTimeSlotCandidates";
+import { TimeSlot } from "@/backend/domain/model/event/timeSlot";
+import duration from "dayjs/plugin/duration";
+
+dayjs.extend(duration);
 
 export interface CandidateSchedule {
-  id: string
-  title: string
-  date: string
-  startTime: string
-  endTime: string
+  id: string;
+  startTime: string;
+  endTime: string;
 }
 
-interface CandidateListProps {
-  candidateSchedules: CandidateSchedule[]
-}
+export const CandidateSchedulesTemplate = () => {
+  const [selectedScheduleIds, setSelectedScheduleIds] = useState<string[]>([]);
+  const [candidates, setCandidates] = useState<CandidateSchedule[]>([]);
+  const [timeSlotsData, setTimeSlotsData] = useState<TimeSlotData[]>([]);
+  const isSmallScreen = useBreakpointValue(
+    { base: true, md: false },
+    { ssr: true },
+  );
 
-export const CandidateSchedulesTemplate = ({
-  candidateSchedules,
-}: CandidateListProps) => {
-  // 選択した要素取得する一連の流れ
-  const [selectedValues, setSelectedValues] = useState<string[]>([])
+  const searchParams = useSearchParams().toString();
+  const eventData: EventDataQueryParams = qs.parse(
+    searchParams,
+  ) as EventDataQueryParams;
+
+  useEffect(() => {
+    createTimeSlotCandidates(eventData).then((tss) => {
+      setTimeSlotsData(tss);
+      setCandidates(
+        tss.map((item) => {
+          return {
+            id: item.id,
+            startTime: item.startDateTime,
+            endTime: item.endDateTime,
+          };
+        }),
+      );
+    });
+  }, []);
+
+  const toast = useToast();
+  const router = useRouter();
 
   const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value
-    const isChecked = event.target.checked
+    const scheduleId = event.target.value;
+    const isChecked = event.target.checked;
 
-    if (isChecked) {
-      setSelectedValues([...selectedValues, value])
-    } else {
-      setSelectedValues(selectedValues.filter((item) => item !== value))
-    }
-  }
+    setSelectedScheduleIds((prevSelectedScheduleIds) => {
+      if (isChecked) {
+        return [...prevSelectedScheduleIds, scheduleId];
+      } else {
+        return prevSelectedScheduleIds.filter((id) => id !== scheduleId);
+      }
+    });
+  };
 
-  const breakpoint = useBreakpointValue(
-    { base: 'base', md: false },
-    { ssr: true },
-  )
+  const handleTemporaryReservation = async () => {
+    await registerEvent(
+      eventData.title,
+      timeSlotsData.filter((ts) => selectedScheduleIds.includes(ts.id)),
+      eventData.locationName,
+    );
 
-  const toast = useToast()
-  const router = useRouter()
-
-  // URLパラメータ取得
-  // const searchParams = useSearchParams()
-  // const test = searchParams.get('id')
+    toast({
+      title: "仮押さえしました",
+      status: "success",
+      duration: 2000,
+      isClosable: true,
+      position: "bottom-left",
+    });
+    router.push("/home");
+  };
 
   return (
-    <Flex justify='flex-start' direction='column' align='center' h='90vh'>
+    <Flex justify="flex-start" direction="column" align="center" h="90vh">
       <Box my={10}>
         <Heading
-          as='h1'
-          size='xl'
-          color='gray.700'
-          textAlign='center'
-          fontFamily={'TsunagiGothic'}
+          as="h1"
+          size="xl"
+          color="gray.700"
+          textAlign="center"
+          fontFamily="TsunagiGothic"
         >
           候補日程一覧
         </Heading>
@@ -70,46 +109,31 @@ export const CandidateSchedulesTemplate = ({
       <VStack
         spacing={4}
         padding={4}
-        align='start'
-        w={breakpoint ? '100%' : '50%'}
-        h='60vh'
-        overflow='auto'
+        align="start"
+        w={isSmallScreen ? "100%" : "50%"}
+        h="60vh"
+        overflow="auto"
       >
-        {candidateSchedules.map((schedule) => (
+        {candidates.map((schedule) => (
           <SelectSchedule
             key={schedule.id}
-            id={schedule.id}
-            title={schedule.title}
-            date={schedule.date}
-            startTime={schedule.startTime}
-            endTime={schedule.endTime}
+            {...schedule}
             handleCheckboxChange={handleCheckboxChange}
           />
         ))}
       </VStack>
-      <Box w={breakpoint ? '100%' : '50%'} mt={10} p={2} alignItems='center'>
+      <Box w={isSmallScreen ? "100%" : "50%"} mt={10} p={2} alignItems="center">
         <Button
-          colorScheme='cyan'
-          variant='outline'
-          size='lg'
-          w='100%'
-          onClick={() => {
-            // TODO : 仮押さえ実行処理
-            alert(selectedValues)
-            toast({
-              title: '仮押さえしました',
-              status: 'success',
-              duration: 2000,
-              isClosable: true,
-              position: 'bottom-left',
-            })
-            router.push('/home')
-          }}
-          isDisabled={selectedValues.length === 0}
+          colorScheme="cyan"
+          variant="outline"
+          size="lg"
+          w="100%"
+          onClick={handleTemporaryReservation}
+          isDisabled={selectedScheduleIds.length === 0}
         >
           仮押さえする
         </Button>
       </Box>
     </Flex>
-  )
-}
+  );
+};

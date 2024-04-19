@@ -1,49 +1,37 @@
-'use client'
-
 import {
+  Box,
+  Button,
+  Flex,
+  FormControl,
   FormErrorMessage,
   FormLabel,
-  FormControl,
-  Input,
-  Button,
-  VStack,
   Heading,
-  Box,
-  Flex,
+  Input,
+  NumberDecrementStepper,
+  NumberIncrementStepper,
   NumberInput,
   NumberInputField,
   NumberInputStepper,
-  NumberIncrementStepper,
-  NumberDecrementStepper,
   useBreakpointValue,
-  Text,
-  useToast,
+  VStack,
 } from '@chakra-ui/react'
 import { PlaceModal } from './PlaceModal'
 import { PlaceInfo } from './PlaceInfo'
-import { useRouter } from 'next/navigation'
+import { FormState } from './FormTemplate'
 
-interface FormTemplatePresenterProps {
-  title: string
-  startTime: string
-  endTime: string
-  duration: string
-  isTimeRangeError: boolean
+interface FormTemplatePresenterProps extends FormState {
   handleTitleChange: (value: string) => void
   handleStartTimeChange: (value: string) => void
   handleEndTimeChange: (value: string) => void
   handleDurationChange: (value: string) => void
+  setStartPlace: (value: string) => void
+  setEndPlace: (value: string) => void
+  setTransportation: (value: string) => void
+  setRequiredTime: (value: string) => void
   isOpen: boolean
   onOpen: () => void
   onClose: () => void
-  startPlace: string
-  endPlace: string
-  setStartPlace: (value: string) => void
-  setEndPlace: (value: string) => void
-  transportation: string
-  setTransportation: (value: string) => void
-  requiredTime: string
-  setRequiredTime: (value: string) => void
+  onSubmit: () => void
 }
 
 export const FormTemplatePresenter = ({
@@ -52,21 +40,22 @@ export const FormTemplatePresenter = ({
   endTime,
   duration,
   isTimeRangeError,
+  startPlace,
+  endPlace,
+  transportation,
+  requiredTime,
   handleTitleChange,
   handleStartTimeChange,
   handleEndTimeChange,
   handleDurationChange,
+  setStartPlace,
+  setEndPlace,
+  setTransportation,
+  setRequiredTime,
   isOpen,
   onOpen,
   onClose,
-  startPlace,
-  endPlace,
-  setStartPlace,
-  setEndPlace,
-  transportation,
-  setTransportation,
-  requiredTime,
-  setRequiredTime,
+  onSubmit,
 }: FormTemplatePresenterProps) => {
   const breakpoint = useBreakpointValue(
     {
@@ -75,11 +64,6 @@ export const FormTemplatePresenter = ({
     },
     { ssr: true },
   )
-  const router = useRouter()
-  const toast = useToast()
-  const handleRouter = () => {
-    router.push(`/candidate`)
-  }
 
   const isDisabled =
     title === '' ||
@@ -92,7 +76,12 @@ export const FormTemplatePresenter = ({
     <Box minHeight='100vh' mt={10}>
       <Flex direction='column' align='center' justify='center' mt={10}>
         <Box mb={4}>
-          <Heading as='h1' size='xl' color='gray.700' fontFamily={'TsunagiGothic'}>
+          <Heading
+            as='h1'
+            size='xl'
+            color='gray.700'
+            fontFamily={'TsunagiGothic'}
+          >
             予定作成フォーム
           </Heading>
         </Box>
@@ -110,7 +99,7 @@ export const FormTemplatePresenter = ({
             <Input
               type='text'
               value={title}
-              onChange={(e) => {
+              onChange={e => {
                 handleTitleChange(e.target.value)
               }}
               borderColor='gray.200'
@@ -130,7 +119,7 @@ export const FormTemplatePresenter = ({
                 type='time'
                 name='start'
                 borderColor='gray.200'
-                onChange={(e) => {
+                onChange={e => {
                   handleStartTimeChange(e.target.value)
                 }}
               />
@@ -143,7 +132,7 @@ export const FormTemplatePresenter = ({
                 type='time'
                 name='end'
                 borderColor='gray.200'
-                onChange={(e) => {
+                onChange={e => {
                   handleEndTimeChange(e.target.value)
                 }}
               />
@@ -158,7 +147,7 @@ export const FormTemplatePresenter = ({
                 clampValueOnBlur={false}
                 value={duration}
                 borderColor='gray.200'
-                onChange={(value) => {
+                onChange={value => {
                   handleDurationChange(value)
                 }}
               >
@@ -204,34 +193,7 @@ export const FormTemplatePresenter = ({
               size='lg'
               w='100%'
               isDisabled={isDisabled}
-              onClick={() => {
-                // TODO : submitした時の処理
-                alert(
-                  title +
-                    ' ' +
-                    startTime +
-                    ' ' +
-                    endTime +
-                    ' ' +
-                    duration +
-                    ' ' +
-                    startPlace +
-                    ' ' +
-                    endPlace +
-                    ' ' +
-                    transportation +
-                    ' ' +
-                    requiredTime,
-                )
-                handleRouter()
-                toast({
-                  title: '予定を作成しました',
-                  status: 'success',
-                  duration: 2000,
-                  isClosable: true,
-                  position: 'bottom-left',
-                })
-              }}
+              onClick={onSubmit}
             >
               作成
             </Button>
